@@ -1,10 +1,12 @@
 package cn.edu.dlmu.base;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 import java.util.Map;
 
+@Mapper
 public interface BaseMapper<T> {
 
 	/**
