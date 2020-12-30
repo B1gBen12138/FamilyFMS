@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.dlmu.dao.BondIOListMapper">
+    <resultMap id="bondIOListMap" type="cn.edu.dlmu.pojo.BondIOList">
+        <result column="id" property="id"/>
+        <result column="bond_list_id" property="bondListId"/>
+        <result column="is_buy_in" property="isBuyIn"/>
+    </resultMap>
+    <parameterMap id="bondIOListParamMap" type="cn.edu.dlmu.pojo.BondIOList">
+        <parameter property="id" resultMap="id"/>
+        <parameter property="bondListId" resultMap="bond_list_id"/>
+        <parameter property="isBuyIn" resultMap="is_buy_in"/>
+    </parameterMap>
+
+    <!--买入卖出证券-->
+    <insert id="add" parameterType="BondIOList" parameterMap="bondIOListParamMap">
+        INSERT INTO Finance.bond_io_list
+        VALUES(null, #{bondListId}, #{isBuyIn});
+    </insert>
+    <!--删除一个证券流水-->
+    <delete id="delete" parameterType="Integer" parameterMap="bondIOListParamMap">
+        DELETE FROM Finance.bond_io_list
+        WHERE id = #{id};
+    </delete>
+
+
+    <!--更改一个证券流水-->
+    <update id="update" parameterMap="bondIOListParamMap" parameterType="BondIOList">
+        UPDATE Finance.bond_io_list
+        <set>
+            <if test="bondListId!= null">bond_list_id = #{bondListId}</if>,
+            <if test="isBuyIn!= null">is_buy_in = #{isBuyIn}</if>,
+        </set>
+        WHERE id = #{id};
+    </update>
+    
+    <select id="queryById" resultType="BondIOList" parameterType="Integer" resultMap="bondIOListMap">
+        SELECT * FROM Finance.bond_io_list WHERE id = #{id};
+    </select>
+
+    <!--根据证券id查询流水-->
+    <select id="queryByBondAccountID" resultType="BondIOList" parameterType="Integer" resultMap="bondIOListMap">
+        SELECT * FROM Finance.bond_io_list WHERE bond_list_id = #{id};
+    </select>
+
+    <select id="queryAll" resultType="BondIOList" resultMap="bondIOListMap">
+        SELECT * FROM Finance.bond_io_list;
+    </select>
+</mapper>

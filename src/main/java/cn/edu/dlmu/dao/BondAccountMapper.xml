@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.dlmu.dao.BondAccountMapper">
+    <resultMap id="BondAccountMap" type="cn.edu.dlmu.pojo.BondAccount">
+        <result column="id" property="id"/>
+        <result column="account_id" property="accountId"/>
+        <result column="name" property="name"/>
+    </resultMap>
+    <parameterMap id="paramMap" type="cn.edu.dlmu.pojo.BondAccount">
+        <parameter property="id" resultMap="id"/>
+        <parameter property="accountId" resultMap="account_id"/>
+        <parameter property="name" resultMap="name"/>
+    </parameterMap>
+
+    <!--添加一个证券账户-->
+    <insert id="add" parameterType="BondAccount">
+        insert into finance.bond_account(id, account_id, name)
+        values(null, #{accountId}, #{name});
+    </insert>
+
+    <!--根据一个证券账户id删除一个账户-->
+    <delete id="delete" parameterType="Integer">
+        delete from Finance.bond_account
+        where id=#{id}
+    </delete>
+
+    <!--更新一个证券账户-->
+    <update id="update" parameterType="BondAccount" parameterMap="paramMap">
+        update finance.bond_account
+        <set>
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="accountId != null">
+                account_id=#{accountId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--根据账户id查询-->
+    <select id="queryById" resultType="BondAccount" parameterType="Integer" resultMap="BondAccountMap">
+        select * from finance.bond_account
+        where id = #{id};
+    </select>
+    
+    <!--根据账户id查询-->
+    <select id="queryByAccountId" resultType="BondAccount" parameterType="Integer" resultMap="BondAccountMap">
+        select * from finance.bond_account
+        where account_id = #{id};
+    </select>
+
+    <select id="queryAll" resultType="BondAccount" resultMap="BondAccountMap">
+        select * from finance.bond_account;
+    </select>
+
+</mapper>

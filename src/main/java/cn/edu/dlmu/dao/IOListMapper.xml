@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.dlmu.dao.IOListMapper">
+
+    <resultMap id="ioListResultMap" type="cn.edu.dlmu.pojo.IOList">
+        <result column="id" property="id"/>
+        <result column="account_id" property="accountId"/>
+        <result column="family_id" property="familyId"/>
+        <result column="is_output" property="isOutput"/>
+        <result column="money" property="money"/>
+        <result column="type" property="type"/>
+        <result column="date" property="date"/>
+        <result column="source" property="source"/>
+        <result column="comment" property="comment"/>
+    </resultMap>
+
+    <parameterMap id="ioListparamMap" type="cn.edu.dlmu.pojo.IOList">
+        <parameter property="id" resultMap="id"/>
+        <parameter property="accountId" resultMap="account_id"/>
+        <parameter property="familyId" resultMap="family_id"/>
+        <parameter property="isOutput" resultMap="is_output"/>
+        <parameter property="money" resultMap="money"/>
+        <parameter property="type" resultMap="type"/>
+        <parameter property="date" resultMap="date"/>
+        <parameter property="source" resultMap="source"/>
+        <parameter property="comment" resultMap="comment"/>
+    </parameterMap>
+
+    <!--插入一条收支流水-->
+    <insert id="add" parameterType="IoList" >
+        INSERT INTO io_list(account_id,family_id,is_output,money,type,date,source,comment)
+        VALUES (#{accountId}, #{familyId}, #{isOutput}, #{money}, #{type}, #{date}, #{source}, #{comment});
+    </insert>
+
+    <!--批量插入收支流水-->
+    <insert id="insertBatch" parameterType="java.util.List" >
+        INSERT INTO io_list(account_id,family_id,is_output,money,type,date,source,comment)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.accountId},
+            #{item.familyId},
+            #{item.isOutput},
+            #{item.money},
+            #{item.type},
+            #{item.date},
+            #{item.source},
+            #{item.comment}
+            )
+        </foreach>
+    </insert>
+
+    <!--根据id查询收支流水-->
+    <select id="queryById" parameterType="Integer" resultType="IoList"
+            resultMap="ioListResultMap">
+        SELECT *
+        FROM io_list
+        WHERE id = #{id}
+    </select>
+
+    <!--根据参数查询收支流水-->
+    <select id="queryByParams" parameterType="Map" resultType="IoList"
+            resultMap="ioListResultMap">
+        SELECT *
+        FROM io_list
+        WHERE
+        <if test="accountId != null">account_id = #{accountId} and </if>
+        <if test="familyId != null">family_id = #{familyId} and </if>
+        <if test="isOutput != null">is_output = #{isOutput} and </if>
+        <if test="money != null">money = #{money} and </if>
+        <if test="type != null">type = #{type} and </if>
+        <if test="date != null">date = #{date} and </if>
+        <if test="source != null">source = #{source} and</if>
+        1=1
+    </select>
+
+    <!--根据参数查询收支流水记录数-->
+    <select id="queryCountByParams" parameterType="Map" resultType="Integer">
+        SELECT COUNT(*)
+        FROM io_list
+        WHERE
+        <if test="accountId != null">account_id = #{accountId} and </if>
+        <if test="familyId != null">family_id = #{familyId} and </if>
+        <if test="isOutput != null">is_output = #{isOutput} and </if>
+        <if test="money != null">money = #{money} and </if>
+        <if test="type != null">type = #{type} and </if>
+        <if test="date != null">date = #{date} and </if>
+        <if test="source != null">source = #{source} and</if>
+        1=1
+    </select>
+
+    <!--更改一条收支流水-->
+    <update id="update" parameterType="IoList" >
+        UPDATE io_list
+        <set>
+            <if test="accountId != null">account_id = #{accountId} ,</if>
+            <if test="familyId != null">family_id = #{familyId} ,</if>
+            <if test="isOutput != null">is_output = #{isOutput} ,</if>
+            <if test="money != null">money = #{money} ,</if>
+            <if test="type != null">type = #{type} ,</if>
+            <if test="date != null">date = #{date} ,</if>
+            <if test="source != null">source = #{source} ,</if>
+            <if test="comment != null">comment = #{comment} </if>
+        </set>
+        WHERE id = #{id};
+    </update>
+
+    <!--批量更新收支流水-->
+<!--    <update id="update" parameterType="IoList" >-->
+<!--        <if test="list!=null">-->
+<!--            <foreach collection="list" item="item" index= "index" open="" close="" separator =";">-->
+<!--                UPDATE io_list-->
+<!--                <set>-->
+<!--                    <if test="accountId != null">account_id = #{accountId} ,</if>-->
+<!--                    <if test="familyId != null">family_id = #{familyId} ,</if>-->
+<!--                    <if test="isOutput != null">is_output = #{isOutput} ,</if>-->
+<!--                    <if test="money != null">money = #{money} ,</if>-->
+<!--                    <if test="type != null">type = #{type} ,</if>-->
+<!--                    <if test="date != null">date = #{date} ,</if>-->
+<!--                    <if test="source != null">source = #{source} ,</if>-->
+<!--                    <if test="comment != null">comment = #{comment} </if>-->
+<!--                </set>-->
+<!--                WHERE id = #{id}-->
+<!--            </foreach>-->
+<!--        </if>-->
+<!--    </update>-->
+
+    <!--根据id删除收支流水-->
+    <delete id="delete" parameterType="Integer">
+        DELETE
+        FROM io_list
+        WHERE id = #{id};
+    </delete>
+
+
+
+</mapper>

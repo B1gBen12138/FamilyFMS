@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.dlmu.dao.BondListMapper">
+    <resultMap id="bondListMap" type="cn.edu.dlmu.pojo.BondList">
+        <result column="id" property="id"/>
+        <result column="bond_account_id" property="bondAccountId"/>
+        <result column="name" property="name"/>
+    </resultMap>
+    <parameterMap id="bondListParamMap" type="cn.edu.dlmu.pojo.BondList">
+        <parameter property="id" resultMap="id"/>
+        <parameter property="bondAccountId" resultMap="bond_account_id"/>
+        <parameter property="name" resultMap="name"/>
+    </parameterMap>
+    
+    
+    <!--增加一个持股明细-->
+    <insert id="add" parameterType="BondList" parameterMap="bondListParamMap">
+        INSERT INTO Finance.bond_list
+        VALUES (null, #{bondAccountId}, #{name});
+    </insert>
+    <!--删除一个持股明细-->
+    <delete id="delete" parameterType="Integer" parameterMap="bondListParamMap">
+        DELETE
+        FROM Finance.bond_list
+        WHERE id = #{id};
+    </delete>
+    <!--修改一个持股明细-->
+    <update id="update" parameterType="BondList" parameterMap="bondListParamMap">
+        UPDATE Finance.bond_list
+        <set>
+            <if test="bondAccountId != null">bond_account_id = #{bondAccountId},</if>
+            <if test="name != null">name = #{name},</if>
+        </set>
+        WHERE id = #{id};
+    </update>
+    
+    <select id="queryById" resultType="BondList" parameterType="Integer" resultMap="bondListMap">
+        SELECT *
+        FROM Finance.bond_list
+        WHERE bond_list.id = #{id};
+    </select>
+    
+    <!--根据证券id查询流水-->
+    <select id="queryByBondAccountId" resultType="BondList" parameterType="Integer" resultMap="bondListMap">
+        SELECT *
+        FROM Finance.bond_list
+        WHERE bond_account_id = #{bondAccountId};
+    </select>
+    <!--查询所有明细-->
+    <select id="queryAll" resultType="BondIOList" resultMap="bondListMap">
+        SELECT *
+        FROM Finance.bond_list;
+    </select>
+
+
+</mapper>

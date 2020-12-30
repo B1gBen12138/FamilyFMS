@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.dlmu.dao.AccountMapper">
+    <resultMap id="resultAccount" type="cn.edu.dlmu.pojo.Account">
+        <result column="id" property="id"/>
+        <result column="family_id" property="familyId"/>
+        <result column="login_name" property="loginName"/>
+        <result column="name" property="name"/>
+        <result column="pass_word" property="password"/>
+        <result column="is_admin" property="isAdmin"/>
+        <result column="is_super_account" property="isSuperAccount"/>
+    </resultMap>
+    <parameterMap id="paramMap" type="cn.edu.dlmu.pojo.Account">
+        <parameter property="id" resultMap="id"/>
+        <parameter property="familyId" resultMap="family_id"/>
+        <parameter property="loginName" resultMap="login_name"/>
+        <parameter property="name" resultMap="name"/>
+        <parameter property="password" resultMap="pass_word"/>
+        <parameter property="isAdmin" resultMap="is_admin"/>
+        <parameter property="isSuperAccount" resultMap="is_super_account"/>
+    </parameterMap>
+    
+    
+    <!--&lt;!&ndash;增加一个用户&ndash;&gt;-->
+    <insert id="add" parameterType="account" parameterMap="paramMap">
+        INSERT INTO Finance.account
+        VALUES (null, null, #{loginName}, #{name}, #{password}, 0, 0);
+    </insert>
+    
+    <!--&lt;!&ndash;根据登录名删除用户&ndash;&gt;-->
+    <delete id="delete" parameterType="Integer">
+        DELETE
+        FROM Finance.account
+        WHERE id = #{UserId};
+    </delete>
+    
+    <!--更改一个用户-->
+    <update id="update" parameterType="Account" parameterMap="paramMap">
+        UPDATE account
+        <set>
+            <if test="familyId != null">family_id = #{familyId}</if>,
+            <if test="loginName != null and loginName != ''">login_name = #{loginName},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="password != null and password != ''">pass_word = #{password},</if>
+            <if test="isAdmin != null">is_admin = #{isAdmin},</if>
+            <if test="isSuperAccount != null">is_super_account = #{isSuperAccount},</if>
+        </set>
+        WHERE id = #{id};
+    </update>
+    
+    <!--根据登录名查询用户-->
+    <select id="queryByLoginName" parameterType="java.lang.String" resultType="Account"
+            resultMap="resultAccount">
+        SELECT *
+        FROM account
+        WHERE login_name = #{loginName};
+    </select>
+    
+    <select id="queryById" parameterType="Integer" resultType="Account"
+            resultMap="resultAccount">
+        SELECT *
+        FROM account
+        WHERE id = #{id};
+    </select>
+    
+    <!--根据-->
+    <select id="queryAll" resultType="account" resultMap="resultAccount">
+        SELECT *
+        FROM Finance.account;
+    </select>
+
+</mapper>
