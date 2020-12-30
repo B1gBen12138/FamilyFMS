@@ -36,8 +36,8 @@ public class AccountServiceImplTest extends BaseTest {
 	@Test
 	public void getBondAccount() throws Exception {
 		Integer aid = accountService.queryByLoginName(account.getLoginName()).getId();
-		for (BondAccount bondAccount : accountService.queryBondAccount(aid)) {
-			System.out.println(bondAccount);
+		for (Account account : accountService.queryAll()) {
+			System.out.println(account);
 		}
 	}
 
