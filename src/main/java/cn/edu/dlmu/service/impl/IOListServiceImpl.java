@@ -1,44 +1,96 @@
 package cn.edu.dlmu.service.impl;
 
-import cn.edu.dlmu.base.BaseMapper;
+import cn.edu.dlmu.base.AssertUtil;
 import cn.edu.dlmu.dao.IOListMapper;
-import cn.edu.dlmu.pojo.FamilyAccount;
 import cn.edu.dlmu.pojo.IOList;
 import cn.edu.dlmu.service.IOListService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IOListServiceImpl extends IBaseServiceImpl<IOList> implements IOListService {
+public class IOListServiceImpl implements IOListService {
 
-    @Autowired
-    private IOListMapper ioListMapper;
+	@Autowired
+	private IOListMapper ioListMapper;
 
-    public void setBaseMapper(BaseMapper<IOList> baseMapper) {
-        this.baseMapper = ioListMapper;
-    }
+	public void setIoListMapper(IOListMapper ioListMapper) {
+		this.ioListMapper = ioListMapper;
+	}
 
-    public Boolean deleteBatch(List<IOList> ioLists) throws Exception {
+	public Integer add(IOList t) throws Exception {
+		AssertUtil.isNull(t, "实体为空");
+		return ioListMapper.add(t);
+	}
 
-        if (ioLists == null)
-            return Boolean.FALSE;
+	/*批量添加记录*/
+	public Integer add(List<IOList> tList) throws Exception {
+		int cot = 0;
+		for (IOList t : tList) {
+			ioListMapper.add(t);
+			cot++;
+		}
+		return cot;
+	}
 
-        for (IOList item : ioLists)
-            ioListMapper.delete(item.getId());
+	/*删除记录*/
+	public Integer delete(Integer id) throws Exception {
+		// 判断 空
+		AssertUtil.isNull(id, "列表为空");
+		AssertUtil.isNull(queryById(id), "待删除的记录不存在!");
+		return ioListMapper.delete(id);
+	}
 
-        return true;
-    }
+	/*删除记录*/
+	public Integer delete(List<Integer> tList) throws Exception {
+		// 判断 空
+		AssertUtil.isNull(tList, "列表为空");
+		int cot = 0;
+		for (Integer id : tList) {
+			AssertUtil.isNull(queryById(id), "待删除的记录不存在!");
+			cot += ioListMapper.delete(id);
+		}
+		return cot;
+	}
 
-    public List<IOList> queryByFamily(FamilyAccount familyAccount) throws Exception {
-        if (familyAccount == null)
-            return null;
+	/*修改记录*/
+	public Integer update(IOList entity) throws Exception {
+		return ioListMapper.update(entity);
+	}
 
-        Map<String, Object> paramMap = new HashMap<String, Object>();
+	public Integer update(List<IOList> tList) throws Exception {
+		AssertUtil.isNull(tList, "List is Null");
+		int cot = 0;
+		for (IOList t : tList) {
+			ioListMapper.update(t);
+			cot++;
+		}
+		return cot;
+	}
 
-        paramMap.put("familyId", familyAccount.getId());
+	/**
+	 * 根据参数统计记录数
+	 *
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("rawtypes")
+	public Integer queryCountByParams(Map map) throws Exception {
+		return ioListMapper.queryCountByParams(map);
+	}
 
-        return ioListMapper.queryByParams(paramMap);
-    }
+	/*根据id查询记录*/
+	public IOList queryById(Integer id) throws Exception {
+		AssertUtil.isNull(id, "记录id非空!");
+		return ioListMapper.queryById(id);
+	}
+
+	public List<IOList> queryAll() throws Exception {
+		return ioListMapper.queryAll();
+	}
+
+	public Boolean deleteBatch(List<IOList> ioLists) {
+		return null;
+	}
 }

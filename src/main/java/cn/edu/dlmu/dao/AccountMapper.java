@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
+@Mapper
 public interface AccountMapper extends BaseMapper<Account> {
 
 	/*增加一个用户*/
@@ -20,6 +21,6 @@ public interface AccountMapper extends BaseMapper<Account> {
 	/*根据登录名查询用户*/
 	Account queryByLoginName(@Param("loginName") String loginName) throws Exception;
 
-	/*查询所有用户*/
-	List<Account> queryAll() throws Exception;
+	List<Account> queryAll();
+
 }

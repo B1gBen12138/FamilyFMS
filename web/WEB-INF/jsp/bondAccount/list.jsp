@@ -18,7 +18,7 @@
         <td height="32" align="left" valign="top" class="text006">
             <table width="98%" border="0" cellspacing="0" cellpadding="0">
                 <tr valign="top">
-                    <td>【 家庭成员管理 】</td>
+                    <td>【 证券账户管理 】</td>
                     <td align="right">
                         <a href="edit" target="mainframe"
                            onMouseOver="MM_swapImage('Image1','','${pageContext.request.contextPath}/images/index_10_1.gif',1)"
@@ -43,27 +43,27 @@
                         <span class="text007">全选</span>--%>
                         序号
                     </td>
-                    <td width="30%" class="text007"> 用户名</td>
-                    <td width="35%" class="text007">真实姓名</td>
+                    <td width="30%" class="text007"> 证券账户名</td>
+<%--                    <td width="35%" class="text007"》</td>>--%>
                     <td width="20%" class="text007">操作</td>
                 </tr>
 
-                    <c:forEach var="user" items="${users}" varStatus="vs">
-                        <tr align="center"  <c:if test="${vs.index%2==1}"> class="bg04"</c:if> >
-                            <td height="35">
-                                    <%--<input type="checkbox" name="id" value="${user.id}">--%>
-                                    ${vs.index+1}
-                            </td>
-                            <td><a href="edit.html"> ${user.name} </a></td>
-                            <td>${user.realname} </td>
-                            <td>
-                                <a href="#"><img src="${pageContext.request.contextPath}/images/icon_set.gif" alt="编 辑"
-                                                 width="14" height="15" border="0" onclick="edit(${user.id})"></a>
-                                <img src="${pageContext.request.contextPath}/images/delete.gif" alt="删 除" width="13"
-                                     height="16" hspace="10" onclick="del(${user.id})">
-                            </td>
-                        </tr>
-                    </c:forEach>
+                <c:forEach var="bondAccount" items="${bondAccounts}" varStatus="vs">
+                    <tr align="center"  <c:if test="${vs.index%2==1}"> class="bg04"</c:if> >
+                        <td height="35">
+                                <%--<input type="checkbox" name="id" value="${user.id}">--%>
+                                ${vs.index+1}
+                        </td>
+                        <td><a href="edit.html"> ${bondAccount.name} </a></td>
+<%--                        <td>${bondAcount} </td>--%>
+                        <td>
+                            <a href="#"><img src="${pageContext.request.contextPath}/images/icon_set.gif" alt="编 辑"
+                                             width="14" height="15" border="0" onclick="edit(${bondAccount.id})"></a>
+                            <img src="${pageContext.request.contextPath}/images/delete.gif" alt="删 除" width="13"
+                                 height="16" hspace="10" onclick="del(${bondAccount.id})">
+                        </td>
+                    </tr>
+                </c:forEach>
                 </tr>
             </table>
         </td>

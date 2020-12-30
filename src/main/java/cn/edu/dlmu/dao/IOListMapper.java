@@ -12,6 +12,7 @@ public interface IOListMapper extends BaseMapper<IOList> {
     /*插入一条收支流水*/
     Integer add(IOList entity) throws DataAccessException;
 
+
     /*批量插入收支流水*/
     Integer insertBatch(List<IOList> entities) throws DataAccessException;
 
