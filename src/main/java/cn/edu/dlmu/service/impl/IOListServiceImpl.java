@@ -45,6 +45,7 @@ public class IOListServiceImpl implements IOListService {
 	public Integer delete(List<Integer> tList) throws Exception {
 		// 判断 空
 		AssertUtil.isNull(tList, "列表为空");
+
 		int cot = 0;
 		for (Integer id : tList) {
 			AssertUtil.isNull(queryById(id), "待删除的记录不存在!");

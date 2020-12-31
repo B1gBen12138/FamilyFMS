@@ -85,7 +85,7 @@ public class BondAccountServiceImpl implements BondAccountService {
 
 	/*根据id查询记录*/
 	public BondAccount queryById(Integer id) throws Exception {
-		AssertUtil.isNull(id, "记录id非空!");
+		AssertUtil.isNull(id, "记录id为空!");
 		return bondAccountMapper.queryById(id);
 	}
 
@@ -97,4 +97,9 @@ public class BondAccountServiceImpl implements BondAccountService {
 	public List<BondAccount> queryByAccountId(Integer accountId) {
 		return bondAccountMapper.queryByAccountId(accountId);
 	}
+
+	public BondAccount queryByName(String newName) {
+		return null;
+	}
+
 }

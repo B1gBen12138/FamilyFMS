@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import cn.edu.dlmu.pojo.Account;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -74,14 +75,14 @@ public class AccountController {
 
 	@RequestMapping("/modifyName")
 	@ResponseBody
-	public Boolean modifyName(String name, String oldName) {
+	public boolean modifyName(@RequestBody String name,@RequestBody String oldName) {
 		try {
 			System.out.println("UserController.modifyName+:" + name + oldName);
 			Account u = accountService.queryByLoginName(name);
 			return u == null || u.getName().equals(oldName);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Boolean.FALSE;
+			return false;
 		}
 	}
 
