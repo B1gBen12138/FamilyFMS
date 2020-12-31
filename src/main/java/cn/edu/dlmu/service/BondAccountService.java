@@ -73,5 +73,5 @@ public interface BondAccountService {
 	public List<BondAccount> queryByAccountId(Integer accountId);
 
 
-
+	BondAccount queryByName(String newName);
 }

@@ -34,11 +34,12 @@ public class LoginController {
 	@RequestMapping("/login")
 	public ModelAndView login(String name, String pwd, String errorMsg, HttpSession session) {
 		try {
-			System.out.println(name);
 			Account account = accountService.queryByLoginName(name);
 			System.out.println(name);
+
 			if(account !=null && account .getPassword().equals(pwd)) {
 				session.setAttribute("loginUser", account );
+
 				return new ModelAndView("index");
 			}else {
 				return new ModelAndView("login")

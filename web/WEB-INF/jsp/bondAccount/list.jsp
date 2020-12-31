@@ -54,7 +54,7 @@
                                 <%--<input type="checkbox" name="id" value="${user.id}">--%>
                                 ${vs.index+1}
                         </td>
-                        <td><a href="edit.html"> ${bondAccount.name} </a></td>
+                        <td><a href="#" onclick="edit(${bondAccount.id})"> ${bondAccount.name} </a></td>
 <%--                        <td>${bondAcount} </td>--%>
                         <td>
                             <a href="#"><img src="${pageContext.request.contextPath}/images/icon_set.gif" alt="编 辑"

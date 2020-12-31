@@ -55,7 +55,7 @@
                                     ${vs.index+1}
                             </td>
                             <td><a href="edit.html"> ${user.name} </a></td>
-                            <td>${user.realname} </td>
+                            <td>${user.name} </td>
                             <td>
                                 <a href="#"><img src="${pageContext.request.contextPath}/images/icon_set.gif" alt="编 辑"
                                                  width="14" height="15" border="0" onclick="edit(${user.id})"></a>

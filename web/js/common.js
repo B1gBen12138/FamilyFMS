@@ -34,7 +34,7 @@ function  edit(id) {
 }
 
 function  del(id) {
-    location.href = "del?id="+id;
+    location.href = "delete?id="+id;
 }
 
 function  dels() {
