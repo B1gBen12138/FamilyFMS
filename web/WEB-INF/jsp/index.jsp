@@ -63,7 +63,7 @@
                                         </tr>
                                         <tr>
                                             <td height="41" background="${pageContext.request.contextPath}/images/index_06.gif" align="left" id="td3">
-                                                <a href="${pageContext.request.contextPath}/item/list" target="mainframe"  id="a3"
+                                                <a href="${pageContext.request.contextPath}/ioList/list" target="mainframe"  id="a3"
                                                    class="tex002"
                                                    onClick="clickToChangeMenuStyle(this)"
                                                 >

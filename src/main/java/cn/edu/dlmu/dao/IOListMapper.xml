@@ -58,12 +58,18 @@
         WHERE id = #{id}
     </select>
 
+    <select id="queryAll" resultType="IoList" resultMap="ioListResultMap">
+        SELECT *
+        FROM io_list;
+    </select>
+
     <!--根据参数查询收支流水-->
     <select id="queryByParams" parameterType="Map" resultType="IoList"
             resultMap="ioListResultMap">
         SELECT *
         FROM io_list
         WHERE
+        <if test="id != null">id = #{id} and </if>
         <if test="accountId != null">account_id = #{accountId} and </if>
         <if test="familyId != null">family_id = #{familyId} and </if>
         <if test="isOutput != null">is_output = #{isOutput} and </if>
@@ -132,6 +138,19 @@
         WHERE id = #{id};
     </delete>
 
-
+    <!--根据参数删除收支流水-->
+    <delete id="deleteByParams" parameterType="Map">
+        DELETE
+        FROM io_list
+        WHERE
+        <if test="accountId != null">account_id = #{accountId} and </if>
+        <if test="familyId != null">family_id = #{familyId} and </if>
+        <if test="isOutput != null">is_output = #{isOutput} and </if>
+        <if test="money != null">money = #{money} and </if>
+        <if test="type != null">type = #{type} and </if>
+        <if test="date != null">date = #{date} and </if>
+        <if test="source != null">source = #{source} and</if>
+        id = #{id}
+    </delete>
 
 </mapper>
