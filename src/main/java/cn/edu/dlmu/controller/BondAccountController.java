@@ -102,19 +102,18 @@ public class BondAccountController {
 	@RequestMapping("/modifyName")
 	public @ResponseBody boolean modifyName(String newName, String oldName, HttpSession s) {
 		try {
-
-			//Account account = (Account)s.getAttribute("loginUser");
-			//System.out.println("BondAccount" + account.getLoginName() +" modifyName:" + oldName +" to " + newName);
-			//@SuppressWarnings("unchecked")
-			//List<BondAccount> list = (List<BondAccount>) s.getAttribute("BondList");
-			//if(list != null){
-			//	for (BondAccount ba: list){
-			//		System.out.println(ba.getName());
-			//		if(ba.getName().equals(newName)) {
-			//			return false;
-			//		}
-			//	}
-			//}
+			Account account = (Account)s.getAttribute("loginUser");
+			System.out.println("BondAccount" + account.getLoginName() +" modifyName:" + oldName +" to " + newName);
+			@SuppressWarnings("unchecked")
+			List<BondAccount> list = (List<BondAccount>) s.getAttribute("BondList");
+			if(list != null){
+				for (BondAccount ba: list){
+					System.out.println(ba.getName());
+					if(ba.getName().equals(newName)) {
+						return false;
+					}
+				}
+			}
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

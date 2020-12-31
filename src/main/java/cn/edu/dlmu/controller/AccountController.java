@@ -2,6 +2,7 @@ package cn.edu.dlmu.controller;
 
 import cn.edu.dlmu.pojo.Account;
 import cn.edu.dlmu.service.AccountService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/account")
@@ -26,8 +29,22 @@ public class AccountController {
 	@RequestMapping("/list")
 	public ModelAndView list(HttpSession s) {
 		try {
-			return new ModelAndView("account/list")
-					.addObject("users", accountService.queryAll());
+			Account account = (Account) s.getAttribute("loginAccount");
+			ModelAndView modelAndView = new ModelAndView("/account/list");
+			Map map = new HashMap<String, Object>(1);
+			map.put("familyId", account.getFamilyId());
+			/*如果是管理员，获取所有的用户*/
+			if(account.getIsAdmin()==Boolean.TRUE){
+				return modelAndView.addObject("accounts", accountService.queryAll())
+						.addObject("loginAccount",(Account) s.getAttribute("loginAccount"));
+
+			} else{
+				/*普通用户*/
+				return modelAndView.addObject("loginAccount", (Account)s.getAttribute("loginAccount"));
+
+			}
+			//return new ModelAndView("account/list")
+			//		.addObject("users", accountService.queryAll());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ModelAndView("500")
@@ -35,11 +52,23 @@ public class AccountController {
 		}
 	}
 
+	/*新增用户*/
+	@RequestMapping("/add")
+	public ModelAndView add(String id) {
+		try {
+			return new ModelAndView("/account/add");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ModelAndView("500")
+					.addObject("ex", e);
+		}
+	}
+
+	/*修改用户*/
 	@RequestMapping("/edit")
 	public ModelAndView edit(String id) {
 		try {
-			return new ModelAndView("account/edit")
-					.addObject("user", id == null ? new Account() : accountService.queryById(Integer.parseInt(id)));
+			return new ModelAndView("account/edit").addObject("account", accountService.queryById(Integer.parseInt(id)));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ModelAndView("500")
@@ -47,11 +76,12 @@ public class AccountController {
 		}
 	}
 
+	/*页面修改用户，修改完毕后跳转回list*/
 	@RequestMapping("/update")
-	public ModelAndView update(Account user) {
+	public ModelAndView update(Account account) {
 		try {
-			System.out.println("UserController.update " + user);
-			accountService.update(user);
+			System.out.println("UserController.update " + account);
+			accountService.update(account);
 			return new ModelAndView("redirect:/account/list");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,6 +90,7 @@ public class AccountController {
 		}
 	}
 
+	/*页面删除用户，删除后跳转回list，刷新页面*/
 	@RequestMapping("/delete")
 	public ModelAndView del(int id) {
 		try {
@@ -80,6 +111,43 @@ public class AccountController {
 			System.out.println("UserController.modifyName+:" + name + oldName);
 			Account u = accountService.queryByLoginName(name);
 			return u == null || u.getName().equals(oldName);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping("/check")
+	public boolean check(String loginName){
+		try{
+			System.out.println("Check LoginName: " + loginName);
+			Account account = accountService.queryByLoginName(loginName);
+			System.out.println("Check Result:" + account);
+			/*如果查询的账户为空，则可以添加用户*/
+			/*不为空，则说明有相同登录名的用户*/
+			return account == null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/*ajax: 增加一个用户*/
+	@ResponseBody
+	@RequestMapping("/add/addAccount")
+	public boolean addAccount(String loginName, String name, String password, Boolean isAdmin , HttpSession session){
+		try{
+			Account loginAccount = (Account) session.getAttribute("loginAccount");
+			System.out.println(String.format("add a Account %s %s %s %b ", loginName, name, password, isAdmin));
+			Account account = new Account(null, null, loginName, name, password, isAdmin, null);
+			System.out.println(String.format("add a Account %s", account));
+			Integer ret = accountService.add(account);
+			if(ret == 1){
+				return true;
+			}
+			System.out.println("add return:  " + ret);
+			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

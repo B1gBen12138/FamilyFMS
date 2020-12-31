@@ -6,6 +6,11 @@ import org.junit.Test;
 import cn.BaseTest;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -73,6 +78,15 @@ public class AccountMapperBaseTest extends BaseTest{
 	public void queryAllAccount()  throws Exception{
 		for (Account ac:accountMapper.queryAll()) {
 			System.out.println(ac);
+		}
+	}
+
+	@Test
+	public void queryByParams() throws DataAccessException{
+		Map map = new HashMap<String, Object>();
+		map.put("familyId", 1);
+		for (Account a : accountMapper.queryByParams(map)) {
+			System.out.println(a);
 		}
 	}
 }

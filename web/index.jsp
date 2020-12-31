@@ -6,7 +6,7 @@
 	<head>
 
 		<script type="text/javascript">
-			location.href = "${pageContext.request.contextPath}/toLogin";
+			location.href = "${pageContext.request.contextPath}/tologin";
 		</script>
 	</head>
 	

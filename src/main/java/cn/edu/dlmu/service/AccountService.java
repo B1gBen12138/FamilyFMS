@@ -2,13 +2,12 @@ package cn.edu.dlmu.service;
 
 import cn.edu.dlmu.pojo.Account;
 import cn.edu.dlmu.pojo.BondAccount;
-import cn.edu.dlmu.pojo.FamilyAccount;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-@Service("accountServiceImpl")
+
 public interface AccountService{
 
 	public Integer add(Account entity) throws Exception;
@@ -84,4 +83,5 @@ public interface AccountService{
 	/*获取账户的证券账户*/
 	List<BondAccount> queryBondAccount(Integer id) throws Exception;
 
+	List<Account> queryByParams(Map<String, Object> map);
 }

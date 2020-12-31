@@ -2,12 +2,12 @@ package cn.edu.dlmu.service.impl;
 
 import cn.BaseTest;
 import cn.edu.dlmu.pojo.Account;
-import cn.edu.dlmu.pojo.BondAccount;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.Assert.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AccountServiceImplTest extends BaseTest {
 
@@ -38,6 +38,16 @@ public class AccountServiceImplTest extends BaseTest {
 		Integer aid = accountService.queryByLoginName(account.getLoginName()).getId();
 		for (Account account : accountService.queryAll()) {
 			System.out.println(account);
+		}
+	}
+
+	@Test
+	@SuppressWarnings("rawtypes")
+	public void queryByParams() throws Exception{
+		Map map = new HashMap<String, Integer>();
+		map.put("familyId", 1);
+		for (Object a : accountService.queryByParams(map)) {
+			System.out.println(a);
 		}
 	}
 

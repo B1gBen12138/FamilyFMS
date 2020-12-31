@@ -6,6 +6,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
     <title>用户管理</title>
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css">
@@ -32,48 +33,39 @@
             <table width="98%" border="0" cellspacing="0" cellpadding="0">
                 <tr align="left" class="bg03">
                     <td width="100%" height="29">
-                        <span class="text001">&nbsp;&nbsp;修改用户信息</span></td>
+                        <span class="text001">&nbsp;&nbsp;新增用户信息</span></td>
                 </tr>
             </table>
-            <form id="subform" action="update" method="post">
+            <form id="subform" action="${pageContext.request.contextPath}/account/add/addAccount" method="post">
                 <table width="98%" border="0" cellpadding="0" cellspacing="0" class="text008">
                     <tr align="center">
                         <td width="12%" height="35px" align="right">登录名</td>
                         <td width="12%" align="left" style="width: 20%">
                             <label for="login">
-                                <input id="login" name="login" type="text" class="inp001" value="${account.loginName}"
-                                       onblur="check(name)" >
+                                <input id="login" name="login" type="text" class="inp001" value=""
+                                        onblur="check(name)" >
                             </label>
                         </td>
-                        <%--                        <td id="loginInfo" align="left" style="display: block">--%>
-                        <%--                            登录名已被使用，请重新输入--%>
-                        <%--                        </td>--%>
+<%--                        <td id="loginInfo" align="left" style="display: block">--%>
+<%--                            登录名已被使用，请重新输入--%>
+<%--                        </td>--%>
                     </tr>
                     <tr align="center">
                         <td width="12%" height="35" align="right">用户名</td>
                         <td width="88%" align="left">
                             <label for="name">
-                                <input id="name" name="name" type="text" class="inp001" value="${account.name}"
-                                       onblur="check(name)">
+                                <input id="name" name="name" type="text" class="inp001" value=""
+                                        onblur="check(name)">
                             </label>
                         </td>
 
                     </tr>
-
                     <tr align="center">
-                        <td width="12%" height="35" align="right">新密码</td>
+                        <td width="12%" height="35" align="right">密码</td>
                         <td width="88%" align="left">
                             <label for="password">
-                                <input id="password" name="password" type="password" class="inp001" value="">
-                            </label>
-                        </td>
-                    </tr>
-                    <tr align="center">
-                        <td width="12%" height="35" align="right">确定密码</td>
-                        <td width="88%" align="left">
-                            <label for="password">
-                                <input id="password1" name="password1" type="password" class="inp001" value=""
-                                       onblur="check(password1)">
+                                <input id="password" name="password" type="password" class="inp001" value=""
+                                       onblur="check(password)">
                             </label>
                         </td>
 
@@ -101,7 +93,7 @@
                         </a>
                     </td>
                     <td width="12%" height="40" align="center">
-                        <a href="list" target="mainframe"
+                        <a href="${pageContext.request.contextPath}/account/list" target="mainframe"
                            onMouseOver="MM_swapImage('Image2','','../images/login_09.gif',1)"
                            onMouseOut="MM_swapImgRestore()"
                            onMouseDown="MM_swapImage('Image2','','../images/login_11.gif',1)"
@@ -124,12 +116,30 @@
 <script>
 
     function doSub() {
-        var loginName = $('login');
-        var name = $('name');
-        var password = $('password');
-        var password1 = $('password1');
+        var loginName = document.getElementById("login");
+        var name = document.getElementById("name");
+        var password = document.getElementById("password");
         var isAdmin = $('input:radio[name="isAdmin"]:checked');
-        sub();
+        console.log(parseInt(isAdmin.val()));
+
+        $.ajax({
+            type: "post",
+            url: "add/addAccount",
+            data: "loginName=" + $('#login').val() + "&name=" + $('#name').val()
+                + "&password=" + $('#password').val() + "&isAdmin=" + parseInt(isAdmin.val()),
+            async: false,
+            success: function (msg) {
+                if (!msg) {
+                    alert("添加失败");
+                }else{
+
+                    alert("添加成功");
+                    goto("${pageContext.request.contextPath}/account/list");
+                }
+            },
+            dataType: "json"
+        })
+
     }
 
     function check(id) {
@@ -145,7 +155,7 @@
                 async: false,
                 success: function (msg) {
                     if (!msg){
-                        param.
+                        alert("登录名已被使用，请重新输入");
                         // document.getElementById("loginInfo").style.display("block");
                         document.getElementById("login").value = "";
                         document.getElementById("login").focus();
@@ -154,14 +164,6 @@
                 },
                 dataType: "json"
             })
-        }
-        if (id === "password1"){
-            let password = $('#password');
-            if (password !== param){
-                param.value = "";
-                alert("密码确认错误，请重新输入");
-                param.focus();
-            }
         }
     }
 </script>

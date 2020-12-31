@@ -120,4 +120,8 @@ public class AccountServiceImpl implements AccountService {
 		return bondAccountMapper.queryByAccountId(id);
 	}
 
+	public List<Account> queryByParams(Map<String, Object> map) {
+		return accountMapper.queryByParams(map);
+	}
+
 }

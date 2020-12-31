@@ -24,7 +24,7 @@
     <!--&lt;!&ndash;增加一个用户&ndash;&gt;-->
     <insert id="add" parameterType="account" parameterMap="paramMap">
         INSERT INTO Finance.account
-        VALUES (null, null, #{loginName}, #{name}, #{password}, 0, 0);
+        VALUES (null, null, #{loginName}, #{name}, #{password}, #{isAdmin}, 0);
     </insert>
     
     <!--&lt;!&ndash;根据登录名删除用户&ndash;&gt;-->
@@ -36,11 +36,11 @@
     
     <!--更改一个用户-->
     <update id="update" parameterType="Account" parameterMap="paramMap">
-        UPDATE account
+        UPDATE Finance.account
         <set>
-            <if test="familyId != null">family_id = #{familyId}</if>,
+            <if test="familyId != null">family_id = #{familyId},</if>
             <if test="loginName != null and loginName != ''">login_name = #{loginName},</if>
-            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="name != null and name != ''">`name` = #{name},</if>
             <if test="password != null and password != ''">pass_word = #{password},</if>
             <if test="isAdmin != null">is_admin = #{isAdmin},</if>
             <if test="isSuperAccount != null">is_super_account = #{isSuperAccount},</if>
@@ -52,14 +52,29 @@
     <select id="queryByLoginName" parameterType="java.lang.String" resultType="Account"
             resultMap="resultAccount">
         SELECT *
-        FROM account
+        FROM Finance.account
         WHERE login_name = #{loginName};
+    </select>
+    
+    <select id="queryByParams" parameterType="Map" resultType="Account"
+            resultMap="resultAccount">
+        SELECT *
+        FROM finance.account
+        WHERE
+        <if test="id != null">id = #{id} and </if>
+        <if test="familyId != null">family_id = #{familyId} and </if>
+        <if test="loginName != null">login_name = #{loginName} and </if>
+        <if test="name != null">name = #{name} and </if>
+        <if test="password != null">pass_word = #{password} and </if>
+        <if test="isAdmin != null">is_admin = #{isAdmin} and </if>
+        <if test="isSuperAccount != null">is_super_account = #{isSuperAccount} and</if>
+        1=1
     </select>
     
     <select id="queryById" parameterType="Integer" resultType="Account"
             resultMap="resultAccount">
         SELECT *
-        FROM account
+        FROM finance.account
         WHERE id = #{id};
     </select>
     

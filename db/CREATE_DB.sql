@@ -24,7 +24,8 @@ create table account
     is_super_account tinyint(1) default 0 not null comment '是否为家庭管理员
                                                         默认为FALSE
                                                         首次创建家庭的人为TRUE',
-
+    constraint account_login_name_uindex
+        unique (login_name),
     constraint account_family_account_id_fk
         foreign key (family_id) references family_account (id)
 )

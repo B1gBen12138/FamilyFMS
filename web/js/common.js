@@ -43,7 +43,12 @@ function  dels() {
 
 function sub(path){
     if(path != null){
-        document.getElementById("subform").action = path
+        document.getElementById("subform").action = path;
     }
+    console.log(document.getElementById("subform"));
     document.getElementById("subform").submit();
+}
+
+function goto(path){
+    window.location.href = path;
 }

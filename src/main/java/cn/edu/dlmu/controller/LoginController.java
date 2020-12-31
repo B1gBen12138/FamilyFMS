@@ -24,7 +24,7 @@ public class LoginController {
 		return new ModelAndView("login");
 	}
 
-	@RequestMapping("/toLogin")
+	@RequestMapping("/tologin")
 	public ModelAndView tologin(HttpSession session) {
 		System.out.println("hello");
 		session.invalidate();
@@ -35,12 +35,12 @@ public class LoginController {
 	public ModelAndView login(String name, String pwd, String errorMsg, HttpSession session) {
 		try {
 			Account account = accountService.queryByLoginName(name);
-			System.out.println(name);
+			System.out.println("Account Login:"+ account);
 
 			if(account !=null && account .getPassword().equals(pwd)) {
-				session.setAttribute("loginUser", account );
+				session.setAttribute("loginAccount", account );
 
-				return new ModelAndView("index");
+				return new ModelAndView("index").addObject("loginAccount",account);
 			}else {
 				return new ModelAndView("login")
 						.addObject("name",name)

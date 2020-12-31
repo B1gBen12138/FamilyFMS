@@ -40,34 +40,35 @@
                     <tr align="center">
                         <td width="12%" height="35" align="right">原账户名</td>
                         <td width="88%" align="left">
-                            <input id="oldName" name="name" type="text" class="inp001" value="${bondAccount.name}"
-                                readonly="readonly"
-                            >
+                            <label for="oldName">
+                                <input id="oldName" name="name" type="text" class="inp001" value="${bondAccount.name}"
+                                       readonly="readonly">
+                            </label>
                         </td>
                     </tr>
                     <tr align="center">
                         <td width="12%" height="35" align="right">新账户名</td>
                         <td width="88%" align="left">
-                            <input id="newName" name="name" type="text" class="inp001" value=""
-                                   onblur="doSub()"
-                            >
+                            <label for="newName">
+                                <input id="newName" name="name" type="text" class="inp001" value=""
+                                       onblur="ajaxName()">
+                            </label>
                         </td>
+
                     </tr>
                 </table>
             </form>
             <table width="98%" border="0" cellpadding="0" cellspacing="0" class="bor001">
                 <tr>
                     <td width="12%" height="40" align="center">
-                        <c:if test="${bondAccount.name != null}">
-                            <a href="#" target="mainframe"
-                               onMouseOver="MM_swapImage('Image1','','../images/index_12_1.gif',1)"
-                               onMouseOut="MM_swapImgRestore()"
-                               onMouseDown="MM_swapImage('Image1','','../images/index_12_2.gif',1)"
-                               onMouseUp="MM_swapImage('Image1','','../images/index_12_1.gif',1)">
-                                <img src="../images/index_12_0.gif" name="Image1" width="75" height="24" border="0"
-                                     id="Image1" onclick="doSub()">
-                            </a>
-                        </c:if>
+                        <a id="tolist" href="#" target="mainframe"
+                           onMouseOver="MM_swapImage('Image1','','../images/index_12_1.gif',1)"
+                           onMouseOut="MM_swapImgRestore()"
+                           onMouseDown="MM_swapImage('Image1','','../images/index_12_2.gif',1)"
+                           onMouseUp="MM_swapImage('Image1','','../images/index_12_1.gif',1)">
+                            <img src="../images/index_12_0.gif" name="Image1" width="75" height="24" border="0"
+                                 id="Image1" onclick="doSub()">
+                        </a>
                     </td>
                     <td width="12%" height="40" align="center">
                         <a href="list" target="mainframe"
@@ -91,19 +92,31 @@
     </tr>
 </table>
 <script>
-
+    function show(id, a) {
+        var value = document.getElementById(id);
+        if (value.value === null){
+            document.getElementById(a).style.display = "none";
+        }
+        doSub();
+    }
 
     function doSub() {
         var newName = document.getElementById("newName")
         var oleName = document.getElementById("oldName")
-        if(oleName === newName){
+        console.log(newName.va, oldName);
+        if (newName.value===""){
+            alert("请输入新的账户名")
+            return;
+        }
+        if(oleName.value === newName.value){
+            alert("两个账户名相同，请重新输入");
             newName.focus();
             return;
         }
         $.ajax({
             type: "post",
             url: "modifyName",
-            data: JSON.stringify("newName=" + $('#newName').val() + "&oldName=" + $('#oldName')),
+            data: "newName=" + $('#newName').val() + "&oldName=" + $('#oldName'),
             async: false,
             success: function (msg) {
                 if (!msg) {
@@ -116,6 +129,21 @@
             dataType: "json"
         })
 
+    }
+    function ajaxName() {
+        $.ajax({
+            type: "post",
+            url: "modifyName",
+            data: "newName=" + $('#newName').val() + "&oldName=" + $('#oldName'),
+            async: false,
+            success: function (msg) {
+                if (!msg) {
+                    $("#checkName").html("证券账户名已被使用，请重新输入")
+                    document.getElementById("newName").focus()
+                }
+            },
+            dataType: "json"
+        })
     }
 </script>
 </body>

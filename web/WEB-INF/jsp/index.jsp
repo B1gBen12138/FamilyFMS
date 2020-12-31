@@ -30,7 +30,7 @@
                         <table width="108" border="0" cellpadding="0" cellspacing="0" class="mar004">
                             <tr>
                                 <td height="41" align="left" valign="bottom" background="images/index_02.gif">
-                                    <div class="mar006"><span class="text003">用户名：</span><span class="text004"> ${loginUser.name} </span></div>
+                                    <div class="mar006"><span class="text003">用户名：</span><span class="text004"> ${loginAccount.name} </span></div>
                                 </td>
                             </tr>
                             <tr>
@@ -38,11 +38,11 @@
                                     <table width="152" border="0" cellpadding="0" cellspacing="0" class="mar005">
                                         <tr>
                                             <td height="41" align="left" background="${pageContext.request.contextPath}/images/index_09.gif" id="td1">
-                                                <a href="${pageContext.request.contextPath}/io/list" target="mainframe"  id="a1"
+                                                <a href="${pageContext.request.contextPath}/account/list" target="mainframe"  id="a1"
                                                    onClick="clickToChangeMenuStyle(this)"
                                                    class="tex001"
                                                 >
-                                                    <div class="mar007">账簿管理</div>
+                                                    <div class="mar007">用户管理</div>
                                                 </a>
                                             </td>
                                         </tr>
@@ -51,7 +51,7 @@
                                         </tr>
                                         <tr>
                                             <td height="41" align="left" background="${pageContext.request.contextPath}/images/index_06.gif" id="td2">
-                                                <a href="${pageContext.request.contextPath}/account/list" target="mainframe" id="a2"
+                                                <a href="${pageContext.request.contextPath}/family/list" target="mainframe" id="a2"
                                                    onClick="clickToChangeMenuStyle(this)"
                                                    class="tex002">
                                                     <div class="mar008">家庭成员管理</div>

@@ -2,9 +2,12 @@ package cn.edu.dlmu.dao;
 
 import cn.edu.dlmu.base.BaseMapper;
 import cn.edu.dlmu.pojo.Account;
+import cn.edu.dlmu.pojo.IOList;
 import org.apache.ibatis.annotations.*;
+import org.springframework.dao.DataAccessException;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface AccountMapper extends BaseMapper<Account> {
@@ -22,5 +25,8 @@ public interface AccountMapper extends BaseMapper<Account> {
 	Account queryByLoginName(@Param("loginName") String loginName) throws Exception;
 
 	List<Account> queryAll();
+
+	@SuppressWarnings("rawtypes")
+	List<Account> queryByParams(Map map) throws DataAccessException;
 
 }
