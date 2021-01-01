@@ -34,7 +34,7 @@ public class BondAccountController {
 		try {
 			/*清除session*/
 			s.removeAttribute(NEW_BOND_ACCOUNT);
-			Account account = (Account) s.getAttribute(AccountController.LOGINACCOUNT);
+			Account account = (Account) s.getAttribute(AccountController.LOGIN_ACCOUNT);
 			List<BondAccount> list = bas.queryByAccountId(account.getId());
 			s.setAttribute(BOND_LIST, list);
 			for (BondAccount ba : list) {
