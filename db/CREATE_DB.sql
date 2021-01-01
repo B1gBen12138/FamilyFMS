@@ -70,7 +70,7 @@ create table io_list
     id         int auto_increment comment '收入支出ID'
         primary key,
     account_id int                        not null,
-    family_id  int                        not null comment '家庭Id',
+    family_id  int                        comment '家庭Id',
     is_output  tinyint(1)    default 1    not null comment '是否为支出',
     money      decimal(9, 2) default 0.00 not null comment '金额',
     type       int           default 1    not null comment '支出（收入）

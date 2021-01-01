@@ -20,6 +20,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/account")
 public class AccountController {
+	/*Session中存放的当前登录账户*/
+	public static final String LOGIN_ACCOUNT = "loginAccount";
 
 	@Autowired
 	@Qualifier("accountServiceImpl")
@@ -29,18 +31,18 @@ public class AccountController {
 	@RequestMapping("/list")
 	public ModelAndView list(HttpSession s) {
 		try {
-			Account account = (Account) s.getAttribute("loginAccount");
+			Account account = (Account) s.getAttribute(LOGIN_ACCOUNT);
 			ModelAndView modelAndView = new ModelAndView("/account/list");
 			Map map = new HashMap<String, Object>(1);
 			map.put("familyId", account.getFamilyId());
 			/*如果是管理员，获取所有的用户*/
 			if(account.getIsAdmin()==Boolean.TRUE){
 				return modelAndView.addObject("accounts", accountService.queryAll())
-						.addObject("loginAccount",(Account) s.getAttribute("loginAccount"));
+						.addObject("loginAccount",(Account) s.getAttribute(LOGIN_ACCOUNT));
 
 			} else{
 				/*普通用户*/
-				return modelAndView.addObject("loginAccount", (Account)s.getAttribute("loginAccount"));
+				return modelAndView.addObject("loginAccount", (Account)s.getAttribute(LOGIN_ACCOUNT));
 
 			}
 			//return new ModelAndView("account/list")
@@ -138,7 +140,7 @@ public class AccountController {
 	@RequestMapping("/add/addAccount")
 	public boolean addAccount(String loginName, String name, String password, Boolean isAdmin , HttpSession session){
 		try{
-			Account loginAccount = (Account) session.getAttribute("loginAccount");
+			//Account la = (Account) session.getAttribute(loginAccount);
 			System.out.println(String.format("add a Account %s %s %s %b ", loginName, name, password, isAdmin));
 			Account account = new Account(null, null, loginName, name, password, isAdmin, null);
 			System.out.println(String.format("add a Account %s", account));

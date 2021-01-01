@@ -3,6 +3,9 @@ package cn;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -30,6 +33,12 @@ public class BaseTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	public MockMvc mockMvc;
 
+	public MockHttpSession session;
+
+	public MockHttpServletRequest request;
+	public MockHttpServletResponse response;
+
+
 	@Override
 	@Resource(name = "dataSource")
 	public void setDataSource(DataSource dataSource) {
@@ -40,5 +49,10 @@ public class BaseTest extends AbstractTransactionalJUnit4SpringContextTests {
 	public void setup()
 	{
 		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();  //初始化MockMvc对象
+		session = new MockHttpSession();
+
+		request = new MockHttpServletRequest();
+		request.setCharacterEncoding("UTF-8");
+		response = new MockHttpServletResponse();
 	}
 }

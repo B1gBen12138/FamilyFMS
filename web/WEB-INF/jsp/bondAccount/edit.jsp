@@ -2,6 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<% String path = request.getContextPath();%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -32,29 +33,25 @@
             <table width="98%" border="0" cellspacing="0" cellpadding="0">
                 <tr align="left" class="bg03">
                     <td width="100%" height="29">
-                        <span class="text001">&nbsp;&nbsp;修改证券账户信息</span></td>
+                        <c:if test="${bondAccount.accountId != null}">
+                            <span class="text001">&nbsp;&nbsp;修改证券账户信息</span>
+                        </c:if>
+                        <c:if test="${bondAccount.accountId == null}">
+                            <span class="text001">&nbsp;&nbsp;添加证券账户信息</span>
+                        </c:if>
+                    </td>
                 </tr>
             </table>
             <form id="subform" action="update" method="post">
                 <table width="98%" border="0" cellpadding="0" cellspacing="0" class="text008">
                     <tr align="center">
-                        <td width="12%" height="35" align="right">原账户名</td>
+                        <td width="12%" height="35" align="right">账户名</td>
                         <td width="88%" align="left">
-                            <label for="oldName">
-                                <input id="oldName" name="name" type="text" class="inp001" value="${bondAccount.name}"
-                                       readonly="readonly">
+                            <label for="bondName">
+                                <input id="bondName" name="bondName" type="text" class="inp001" value="${bondAccount.name}"
+                                    onblur=ajaxName()>
                             </label>
                         </td>
-                    </tr>
-                    <tr align="center">
-                        <td width="12%" height="35" align="right">新账户名</td>
-                        <td width="88%" align="left">
-                            <label for="newName">
-                                <input id="newName" name="name" type="text" class="inp001" value=""
-                                       onblur="ajaxName()">
-                            </label>
-                        </td>
-
                     </tr>
                 </table>
             </form>
@@ -71,7 +68,7 @@
                         </a>
                     </td>
                     <td width="12%" height="40" align="center">
-                        <a href="list" target="mainframe"
+                        <a href="${pageContext.request.contextPath}/bondAccount/list" target="mainframe"
                            onMouseOver="MM_swapImage('Image2','','../images/login_09.gif',1)"
                            onMouseOut="MM_swapImgRestore()"
                            onMouseDown="MM_swapImage('Image2','','../images/login_11.gif',1)"
@@ -92,34 +89,18 @@
     </tr>
 </table>
 <script>
-    function show(id, a) {
-        var value = document.getElementById(id);
-        if (value.value === null){
-            document.getElementById(a).style.display = "none";
-        }
-        doSub();
-    }
 
     function doSub() {
-        var newName = document.getElementById("newName")
-        var oleName = document.getElementById("oldName")
-        console.log(newName.va, oldName);
-        if (newName.value===""){
-            alert("请输入新的账户名")
-            return;
-        }
-        if(oleName.value === newName.value){
-            alert("两个账户名相同，请重新输入");
-            newName.focus();
-            return;
-        }
+        let bondName = $('#bondName');
+        ajaxName();
         $.ajax({
             type: "post",
             url: "modifyName",
-            data: "newName=" + $('#newName').val() + "&oldName=" + $('#oldName'),
+            data: "bondName=" +bondName.val(),
             async: false,
             success: function (msg) {
                 if (!msg) {
+                    alert("证券账户名已被使用，请重新输入");
                     $("#checkName").html("证券账户名已被使用，请重新输入")
                     document.getElementById("newName").focus()
                 }else{
@@ -131,15 +112,16 @@
 
     }
     function ajaxName() {
+        let bondName = $('#bondName');
         $.ajax({
             type: "post",
             url: "modifyName",
-            data: "newName=" + $('#newName').val() + "&oldName=" + $('#oldName'),
+            data: "bondName=" + bondName.val(),
             async: false,
             success: function (msg) {
                 if (!msg) {
-                    $("#checkName").html("证券账户名已被使用，请重新输入")
-                    document.getElementById("newName").focus()
+                    bondName.val("");
+                    alert("证券账户名已被使用，请重新输入");
                 }
             },
             dataType: "json"
