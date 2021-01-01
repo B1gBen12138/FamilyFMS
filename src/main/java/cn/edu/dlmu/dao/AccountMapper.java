@@ -2,8 +2,8 @@ package cn.edu.dlmu.dao;
 
 import cn.edu.dlmu.base.BaseMapper;
 import cn.edu.dlmu.pojo.Account;
-import cn.edu.dlmu.pojo.IOList;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
 
 import java.util.List;
@@ -29,4 +29,7 @@ public interface AccountMapper extends BaseMapper<Account> {
 	@SuppressWarnings("rawtypes")
 	List<Account> queryByParams(Map map) throws DataAccessException;
 
+	List<Account> queryByFamilyId(Integer id) throws Exception;
+	List<Account> queryByFamilyIdList(List<Integer> ids) throws Exception;
+    List<Account> querySpecificAndSingle(Integer id) throws Exception;
 }

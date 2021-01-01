@@ -46,7 +46,7 @@ public class IOListController {
         try {
             Account user = (Account) s.getAttribute("loginAccount");
             if (user == null || user.getId() == null)
-                return new ModelAndView("/login")
+                return new ModelAndView("/tologin")
                         .addObject("flag", 2);
 
             logger.debug(String.format("user %d try to list", user.getId()));
@@ -67,7 +67,7 @@ public class IOListController {
         try {
             Account user = (Account) s.getAttribute("loginAccount");
             if (user == null || user.getId() == null)
-                return new ModelAndView("/login")
+                return new ModelAndView("/tologin")
                         .addObject("flag", 2);
 
             logger.debug(String.format("user %d try to edit %d", user.getId(), id));
@@ -96,7 +96,7 @@ public class IOListController {
         try {
             Account user = (Account) s.getAttribute("loginAccount");
             if (user == null || user.getId() == null)
-                return new ModelAndView("/login")
+                return new ModelAndView("/tologin")
                         .addObject("flag", 2);
 
             AssertUtil.isNull(ioList, "收支项目为空");
@@ -124,7 +124,7 @@ public class IOListController {
         try {
             Account user = (Account) s.getAttribute("loginAccount");
             if (user == null || user.getId() == null)
-                return new ModelAndView("/login")
+                return new ModelAndView("/tologin")
                         .addObject("flag", 2);
 
             logger.debug(String.format("user %d try to delete %d", user.getId(), id));
