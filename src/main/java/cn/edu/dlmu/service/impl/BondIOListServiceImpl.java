@@ -5,13 +5,17 @@ import cn.edu.dlmu.dao.BondIOListMapper;
 import cn.edu.dlmu.pojo.BondIOList;
 import cn.edu.dlmu.pojo.BondList;
 import cn.edu.dlmu.service.BondIOListService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
+@Service("bondIOListServiceImpl")
 public class BondIOListServiceImpl implements BondIOListService {
-	
+
+	@Autowired
 	BondIOListMapper bondIOListMapper;
 
 	public void setBondIOListMapper(BondIOListMapper bondIOListMapper) {
@@ -89,7 +93,7 @@ public class BondIOListServiceImpl implements BondIOListService {
 		return bondIOListMapper.queryAll();
 	}
 	/*根据证券id查询所有流水*/
-	public List<BondIOList> queryByBondListId(Integer bondListId) {
-		return null;
+	public List<BondIOList> queryByBondListId(Integer bondListId) throws Exception{
+		return bondIOListMapper.queryByBondListId(bondListId);
 	}
 }

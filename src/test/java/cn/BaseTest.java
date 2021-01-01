@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 
-
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
@@ -27,17 +26,10 @@ import javax.sql.DataSource;
 public class BaseTest extends AbstractTransactionalJUnit4SpringContextTests {
 	@Autowired
 	public WebApplicationContext wac;
-
-	//@Mock
-	//private MembersService service;
-
 	public MockMvc mockMvc;
-
 	public MockHttpSession session;
-
 	public MockHttpServletRequest request;
 	public MockHttpServletResponse response;
-
 
 	@Override
 	@Resource(name = "dataSource")
@@ -46,8 +38,7 @@ public class BaseTest extends AbstractTransactionalJUnit4SpringContextTests {
 	}
 
 	@Before
-	public void setup()
-	{
+	public void setup() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();  //初始化MockMvc对象
 		session = new MockHttpSession();
 

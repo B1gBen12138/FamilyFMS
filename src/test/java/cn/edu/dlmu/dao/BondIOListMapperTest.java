@@ -37,11 +37,11 @@ public class BondIOListMapperTest extends BaseTest {
     @Test
     public void updateBondIOList() throws Exception {
         //bondIOListMapper.addBondIOList(bondIOList);
-        List<BondIOList> bondIOLists = bondIOListMapper.queryByBondAccountID(1);
-	    for (BondIOList bondIOList:bondIOLists) {
-		    System.out.println(bondIOList);
-		    bondIOListMapper.update(new BondIOList(bondIOList.getId(), bondIOList.getBondListId(), bondIOList.getIsBuyIn()==Boolean.TRUE?Boolean.FALSE:Boolean.TRUE));
-	    }
+        //List<BondIOList> bondIOLists = bondIOListMapper.queryByBondAccountID(1);
+	    //for (BondIOList bondIOList:bondIOLists) {
+		//    System.out.println(bondIOList);
+		//    bondIOListMapper.update(new BondIOList(bondIOList.getId(), bondIOList.getBondListId(), bondIOList.getIsBuyIn()==Boolean.TRUE?Boolean.FALSE:Boolean.TRUE));
+	    //}
 
     }
 
