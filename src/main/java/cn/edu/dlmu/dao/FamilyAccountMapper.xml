@@ -8,19 +8,19 @@
 <!---->
     <!--增加一个家庭*/-->
     <insert id="add" parameterType="FamilyAccount">
-        insert into Finance.family_account
+        insert into family_account
         values(null, #{name});
     </insert>
 
 <!--    根据家庭id删除一个用户-->
     <delete id="delete" parameterType="Integer">
-        delete from Finance.family_account
+        delete from family_account
         where id=#{id};
     </delete>
 <!---->
     <!--更新一个家庭信息-->
     <update id="update" parameterType="FamilyAccount">
-        update Finance.family_account
+        update family_account
         <set>
             <if test="name != null">
                 name=#{name}
@@ -31,19 +31,19 @@
 <!---->
     <!--根据家庭id查询家庭-->
     <select id="queryById" resultType="familyAccount" parameterType="Integer" resultMap="familyAccountMap">
-        select * from finance.family_account
+        select * from family_account
         where id = #{id};
     </select>
 <!---->
     <!--根据家庭名查询家庭-->
     <select id="queryByName" resultType="familyAccount" parameterType="String" resultMap="familyAccountMap">
-        select * from finance.family_account
+        select * from family_account
         where name = #{name};
     </select>
     <!--查询所有家庭组-->
     <select id="queryAll" resultType="FamilyAccount" resultMap="familyAccountMap">
         SELECT *
-        FROM finance.family_account;
+        FROM family_account;
     </select>
 <!---->
 </mapper>

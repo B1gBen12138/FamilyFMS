@@ -23,20 +23,20 @@
     
     <!--&lt;!&ndash;增加一个用户&ndash;&gt;-->
     <insert id="add" parameterType="account" parameterMap="paramMap">
-        INSERT INTO Finance.account
+        INSERT INTO account
         VALUES (null, null, #{loginName}, #{name}, #{password}, #{isAdmin}, 0);
     </insert>
     
     <!--&lt;!&ndash;根据登录名删除用户&ndash;&gt;-->
     <delete id="delete" parameterType="Integer">
         DELETE
-        FROM Finance.account
+        FROM account
         WHERE id = #{UserId};
     </delete>
     
     <!--更改一个用户-->
     <update id="update" parameterType="Account" parameterMap="paramMap">
-        UPDATE Finance.account
+        UPDATE account
         <set>
             <if test="familyId != null">family_id = #{familyId},</if>
             <if test="loginName != null and loginName != ''">login_name = #{loginName},</if>
@@ -52,14 +52,14 @@
     <select id="queryByLoginName" parameterType="java.lang.String" resultType="Account"
             resultMap="resultAccount">
         SELECT *
-        FROM Finance.account
+        FROM account
         WHERE login_name = #{loginName};
     </select>
     
     <select id="queryByParams" parameterType="Map" resultType="Account"
             resultMap="resultAccount">
         SELECT *
-        FROM finance.account
+        FROM account
         WHERE
         <if test="id != null">id = #{id} and </if>
         <if test="familyId != null">family_id = #{familyId} and </if>
@@ -74,14 +74,14 @@
     <select id="queryById" parameterType="Integer" resultType="Account"
             resultMap="resultAccount">
         SELECT *
-        FROM finance.account
+        FROM account
         WHERE id = #{id};
     </select>
     
     <!--根据-->
     <select id="queryAll" resultType="account" resultMap="resultAccount">
         SELECT *
-        FROM Finance.account;
+        FROM account;
     </select>
 
 </mapper>

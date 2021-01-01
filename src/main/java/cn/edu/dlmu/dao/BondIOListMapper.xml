@@ -14,19 +14,19 @@
 
     <!--买入卖出证券-->
     <insert id="add" parameterType="BondIOList" parameterMap="bondIOListParamMap">
-        INSERT INTO Finance.bond_io_list
+        INSERT INTO bond_io_list
         VALUES(null, #{bondListId}, #{isBuyIn});
     </insert>
     <!--删除一个证券流水-->
     <delete id="delete" parameterType="Integer" parameterMap="bondIOListParamMap">
-        DELETE FROM Finance.bond_io_list
+        DELETE FROM bond_io_list
         WHERE id = #{id};
     </delete>
 
 
     <!--更改一个证券流水-->
     <update id="update" parameterMap="bondIOListParamMap" parameterType="BondIOList">
-        UPDATE Finance.bond_io_list
+        UPDATE bond_io_list
         <set>
             <if test="bondListId!= null">bond_list_id = #{bondListId}</if>,
             <if test="isBuyIn!= null">is_buy_in = #{isBuyIn}</if>,
@@ -35,15 +35,15 @@
     </update>
     
     <select id="queryById" resultType="BondIOList" parameterType="Integer" resultMap="bondIOListMap">
-        SELECT * FROM Finance.bond_io_list WHERE id = #{id};
+        SELECT * FROM bond_io_list WHERE id = #{id};
     </select>
 
     <!--根据证券id查询流水-->
     <select id="queryByBondAccountID" resultType="BondIOList" parameterType="Integer" resultMap="bondIOListMap">
-        SELECT * FROM Finance.bond_io_list WHERE bond_list_id = #{id};
+        SELECT * FROM bond_io_list WHERE bond_list_id = #{id};
     </select>
 
     <select id="queryAll" resultType="BondIOList" resultMap="bondIOListMap">
-        SELECT * FROM Finance.bond_io_list;
+        SELECT * FROM bond_io_list;
     </select>
 </mapper>
