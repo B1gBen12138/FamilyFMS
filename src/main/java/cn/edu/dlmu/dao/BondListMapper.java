@@ -4,10 +4,13 @@ package cn.edu.dlmu.dao;
 
 import cn.edu.dlmu.base.BaseMapper;
 import cn.edu.dlmu.pojo.BondList;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+
+@Mapper
 public interface BondListMapper extends BaseMapper<BondList> {
     ///*增加一个持股明细*/
     Integer add(BondList bondList) throws Exception;

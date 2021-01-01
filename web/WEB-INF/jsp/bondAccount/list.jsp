@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-    <title>家庭成员管理</title>
+    <title>证券账户管理</title>
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css">
     <script language="JavaScript" type="text/JavaScript" src="${pageContext.request.contextPath}/js/common.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquery-3.0.0.min.js"></script>

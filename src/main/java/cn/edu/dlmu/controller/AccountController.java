@@ -3,6 +3,8 @@ package cn.edu.dlmu.controller;
 import cn.edu.dlmu.pojo.Account;
 import cn.edu.dlmu.service.AccountService;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,8 @@ public class AccountController {
 	/*Session中存放的当前登录账户*/
 	public static final String LOGIN_ACCOUNT = "loginAccount";
 
+	private final static Logger logger = LogManager.getLogger(IOListController.class);
+
 	@Autowired
 	@Qualifier("accountServiceImpl")
 	private AccountService accountService;
@@ -36,13 +40,13 @@ public class AccountController {
 			Map map = new HashMap<String, Object>(1);
 			map.put("familyId", account.getFamilyId());
 			/*如果是管理员，获取所有的用户*/
-			if(account.getIsAdmin()==Boolean.TRUE){
+			if (account.getIsAdmin() == Boolean.TRUE) {
 				return modelAndView.addObject("accounts", accountService.queryAll())
-						.addObject("loginAccount",(Account) s.getAttribute(LOGIN_ACCOUNT));
+						.addObject("loginAccount", (Account) s.getAttribute(LOGIN_ACCOUNT));
 
-			} else{
+			} else {
 				/*普通用户*/
-				return modelAndView.addObject("loginAccount", (Account)s.getAttribute(LOGIN_ACCOUNT));
+				return modelAndView.addObject("loginAccount", (Account) s.getAttribute(LOGIN_ACCOUNT));
 
 			}
 			//return new ModelAndView("account/list")
@@ -82,7 +86,7 @@ public class AccountController {
 	@RequestMapping("/update")
 	public ModelAndView update(Account account) {
 		try {
-			System.out.println("UserController.update " + account);
+			logger.debug("UserController.update " + account);
 			accountService.update(account);
 			return new ModelAndView("redirect:/account/list");
 		} catch (Exception e) {
@@ -96,7 +100,7 @@ public class AccountController {
 	@RequestMapping("/delete")
 	public ModelAndView del(int id) {
 		try {
-			System.out.println("UserController.del " + id);
+			logger.debug("UserController.del " + id);
 			accountService.delete(id);
 			return new ModelAndView("redirect:/account/list");
 		} catch (Exception e) {
@@ -108,9 +112,9 @@ public class AccountController {
 
 	@RequestMapping("/modifyName")
 	@ResponseBody
-	public boolean modifyName(@RequestBody String name,@RequestBody String oldName) {
+	public boolean modifyName(@RequestBody String name, @RequestBody String oldName) {
 		try {
-			System.out.println("UserController.modifyName+:" + name + oldName);
+			logger.debug("UserController.modifyName+:" + name + oldName);
 			Account u = accountService.queryByLoginName(name);
 			return u == null || u.getName().equals(oldName);
 		} catch (Exception e) {
@@ -121,11 +125,11 @@ public class AccountController {
 
 	@ResponseBody
 	@RequestMapping("/check")
-	public boolean check(String loginName){
-		try{
-			System.out.println("Check LoginName: " + loginName);
+	public boolean check(String loginName) {
+		try {
+			logger.debug("Check LoginName: " + loginName);
 			Account account = accountService.queryByLoginName(loginName);
-			System.out.println("Check Result:" + account);
+			logger.debug("Check Result:" + account);
 			/*如果查询的账户为空，则可以添加用户*/
 			/*不为空，则说明有相同登录名的用户*/
 			return account == null;
@@ -138,17 +142,17 @@ public class AccountController {
 	/*ajax: 增加一个用户*/
 	@ResponseBody
 	@RequestMapping("/add/addAccount")
-	public boolean addAccount(String loginName, String name, String password, Boolean isAdmin , HttpSession session){
-		try{
+	public boolean addAccount(String loginName, String name, String password, Boolean isAdmin, HttpSession session) {
+		try {
 			//Account la = (Account) session.getAttribute(loginAccount);
-			System.out.println(String.format("add a Account %s %s %s %b ", loginName, name, password, isAdmin));
+			logger.debug(String.format("add a Account %s %s %s %b ", loginName, name, password, isAdmin));
 			Account account = new Account(null, null, loginName, name, password, isAdmin, null);
-			System.out.println(String.format("add a Account %s", account));
+			logger.debug(String.format("add a Account %s", account));
 			Integer ret = accountService.add(account);
-			if(ret == 1){
+			if (ret == 1) {
 				return true;
 			}
-			System.out.println("add return:  " + ret);
+			logger.debug("add return:  " + ret);
 			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
