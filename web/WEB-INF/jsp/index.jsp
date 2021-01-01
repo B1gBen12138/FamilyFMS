@@ -101,6 +101,19 @@
                                             <td height="20">&nbsp;</td>
                                         </tr>
                                         <tr>
+                                            <td height="41" background="${pageContext.request.contextPath}/images/index_06.gif" align="left" id="td6">
+                                                <a href="${pageContext.request.contextPath}/bondIOList/list" target="mainframe"  id="a6"
+                                                   class="tex002"
+                                                   onClick="clickToChangeMenuStyle(this)"
+                                                >
+                                                    <div class="mar008">证券流水管理</div>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td height="20">&nbsp;</td>
+                                        </tr>
+                                        <tr>
                                             <td height="41" background="${pageContext.request.contextPath}/images/index_06.gif" align="left">
                                                 <a href="#" class="tex002">
                                                     <div class="mar007" onclick="toLogin()">退出系统</div>

@@ -5,6 +5,7 @@ import cn.edu.dlmu.pojo.BondIOList;
 import java.util.List;
 import java.util.Map;
 
+
 public interface BondIOListService {
 
 	public Integer add(BondIOList entity) throws Exception;
@@ -68,8 +69,8 @@ public interface BondIOListService {
 	 */
 	@SuppressWarnings("rawtypes")
 	public Integer queryCountByParams(Map map) throws Exception;
-	
+
 	/*根据证券账户获取所有证券*/
-	public List<BondIOList> queryByBondListId(Integer bondListId);
+	public List<BondIOList> queryByBondListId(Integer bondListId)throws Exception;
 
 }

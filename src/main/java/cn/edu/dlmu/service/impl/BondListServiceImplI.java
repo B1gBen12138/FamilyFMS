@@ -55,6 +55,7 @@ public class BondListServiceImplI implements BondListService {
 		}
 		return cot;
 	}
+
 	/*修改记录*/
 	public Integer update(BondList entity) throws Exception {
 		return bondListMapper.update(entity);
@@ -88,12 +89,13 @@ public class BondListServiceImplI implements BondListService {
 		return bondListMapper.queryById(id);
 	}
 
-	public List<BondList> queryAll() throws Exception{
+	public List<BondList> queryAll() throws Exception {
 		return bondListMapper.queryAll();
 	}
+
 	/**/
 	public List<BondList> queryByBondAccountId(Integer bondAccountId) throws Exception {
-
 		return bondListMapper.queryByBondAccountId(bondAccountId);
 	}
+
 }
