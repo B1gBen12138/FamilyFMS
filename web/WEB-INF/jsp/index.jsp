@@ -90,11 +90,10 @@
                                         </tr>
                                         <tr>
                                             <td height="41" background="${pageContext.request.contextPath}/images/index_06.gif" align="left" id="td5">
-                                                <a href="${pageContext.request.contextPath}/report/bbtj" target="mainframe" id="a5"
+                                                <a href="${pageContext.request.contextPath}/bondList/list" target="mainframe" id="a5"
                                                    class="tex002"
-                                                   onClick="clickToChangeMenuStyle(this)"
-                                                >
-                                                    <div class="mar007">报表统计</div>
+                                                   onClick="clickToChangeMenuStyle(this)">
+                                                    <div class="mar007">证券</div>
                                                 </a>
                                             </td>
                                         </tr>

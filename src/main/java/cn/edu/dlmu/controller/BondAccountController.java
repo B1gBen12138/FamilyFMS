@@ -4,6 +4,8 @@ import cn.edu.dlmu.pojo.Account;
 import cn.edu.dlmu.pojo.BondAccount;
 import cn.edu.dlmu.service.AccountService;
 import cn.edu.dlmu.service.BondAccountService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ public class BondAccountController {
 
 	public static final String BOND_LIST = "BondList";
 
+	private final static Logger logger = LogManager.getLogger(IOListController.class);
+
 	@Autowired
 	@Qualifier("bondAccountServiceImpl")
 	BondAccountService bas;
@@ -38,7 +42,7 @@ public class BondAccountController {
 			List<BondAccount> list = bas.queryByAccountId(account.getId());
 			s.setAttribute(BOND_LIST, list);
 			for (BondAccount ba : list) {
-				System.out.println(ba);
+				logger.debug(ba);
 			}
 			return new ModelAndView("/bondAccount/list")
 					.addObject("bondAccounts", list);
@@ -76,7 +80,7 @@ public class BondAccountController {
 			/** 根据是否有id，选择新增BondAccount或修改*/
 			BondAccount ba = id == null ? new BondAccount() : bas.queryById(id);
 			;
-			System.out.println("edit " + ba);
+			logger.debug("edit " + ba);
 			session.setAttribute(BondAccountController.NEW_BOND_ACCOUNT, ba);
 			return new ModelAndView("/bondAccount/edit")
 					.addObject("bondAccount", ba);
@@ -97,13 +101,13 @@ public class BondAccountController {
 			bondAccount.setName(bondName);
 			int ret = 0;
 			if (bondAccount.getId() == null) {
-				System.out.println("BondAccount.add " + bondAccount);
+				logger.debug("BondAccount.add " + bondAccount);
 				ret = bas.add(bondAccount);
 			} else {
-				System.out.println("BondAccount.update " + bondAccount);
+				logger.debug("BondAccount.update " + bondAccount);
 				ret = bas.update(bondAccount);
 			}
-			System.out.println("update result: " + ret);
+			logger.debug("update result: " + ret);
 			return new ModelAndView("redirect:/bondAccount/list");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -116,7 +120,7 @@ public class BondAccountController {
 	@RequestMapping("/delete")
 	public ModelAndView del(int id) {
 		try {
-			System.out.println("BondAccount.del " + id);
+			logger.debug("BondAccount.del " + id);
 			bas.delete(id);
 			return new ModelAndView("redirect:/bondAccount/list");
 		} catch (Exception e) {
@@ -135,7 +139,7 @@ public class BondAccountController {
 			 * 如果BondAccound*/
 			List<BondAccount> lists = (List<BondAccount>) session.getAttribute(BOND_LIST);
 			BondAccount ba = (BondAccount) session.getAttribute(NEW_BOND_ACCOUNT);
-			System.out.println(String.format("modifyName: %s newName: %s lists :%s", ba, bondName, lists));
+			logger.debug(String.format("modifyName: %s newName: %s lists :%s", ba, bondName, lists));
 			Account account = (Account) session.getAttribute(AccountController.LOGIN_ACCOUNT);
 			if (ba.getId() == null) {
 				/** 创建新账户,*/
