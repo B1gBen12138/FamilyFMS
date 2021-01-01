@@ -1,84 +1,90 @@
 package cn.edu.dlmu.service;
 
-import cn.edu.dlmu.dao.FamilyAccountMapper;
 import cn.edu.dlmu.pojo.Account;
 import cn.edu.dlmu.pojo.FamilyAccount;
 
 import java.util.List;
 import java.util.Map;
 
-public interface FamilyAccountService{
+public interface FamilyAccountService {
 
-	public Integer add(FamilyAccount entity) throws Exception;
+    Integer add(FamilyAccount entity) throws Exception;
 
-	/**
-	 * 添加记录
-	 *
-	 * @param entity
-	 * @return
-	 * @throws Exception
-	 */
-	public Integer add(List<FamilyAccount> entity) throws Exception;
+    Boolean add(FamilyAccount familyAccount, Account executor) throws Exception;
 
-	/**
-	 * 删除记录
-	 *
-	 * @param id
-	 * @return
-	 * @throws Exception
-	 */
-	public Integer delete(Integer id) throws Exception;
+    /**
+     * 添加记录
+     *
+     * @param entity
+     * @return
+     * @throws Exception
+     */
+    Integer add(List<FamilyAccount> entity) throws Exception;
 
-	/**
-	 * 删除记录
-	 *
-	 * @param id
-	 * @return
-	 * @throws Exception
-	 */
-	public Integer delete(List<Integer> id) throws Exception;
+    /**
+     * 删除记录
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    Boolean delete(Integer id) throws Exception;
 
-	/*修改记录*/
-	public Integer update(FamilyAccount t) throws Exception;
+    Boolean delete(Integer id, Account executor) throws Exception;
 
-	/**
-	 * 修改记录
-	 *
-	 * @param entity
-	 * @return
-	 * @throws Exception
-	 */
-	public Integer update(List<FamilyAccount> entity) throws Exception;
+    /**
+     * 删除记录
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    Integer delete(List<Integer> id) throws Exception;
 
-	/**
-	 * 查询记录通过id
-	 *
-	 * @param id
-	 * @return
-	 * @throws Exception
-	 */
-	public FamilyAccount queryById(Integer id) throws Exception;
+    /*修改记录*/
+    Integer update(FamilyAccount t) throws Exception;
 
-	List<FamilyAccount> queryAll() throws Exception;
+    Boolean update(FamilyAccount familyAccount, Account executor) throws Exception;
 
-	/**
-	 * 根据参数统计记录数
-	 *
-	 * @param map
-	 * @return
-	 * @throws Exception
-	 */
-	@SuppressWarnings("rawtypes")
-	public Integer queryCountByParams(Map map) throws Exception;
-	
-	/*增加一个用户到家庭组*/
-	public Boolean addFamilyMember(Account member, FamilyAccount familyAccount);
+    /**
+     * 修改记录
+     *
+     * @param entity
+     * @return
+     * @throws Exception
+     */
+    Integer update(List<FamilyAccount> entity) throws Exception;
 
-	/*删除一个家庭组成员*/
-	public Boolean deleteFamilyMember(FamilyAccount familyAccount);
+    /**
+     * 查询记录通过id
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    FamilyAccount queryById(Integer id) throws Exception;
 
-	/*删除批量家庭成员*/
-	public Boolean deleteFamilyMemberBatch(FamilyAccount familyAccount);
+    FamilyAccount queryById(Integer id, Account executor) throws Exception;
 
+    List<FamilyAccount> queryByAccount(Account executor) throws Exception;
 
+    List<FamilyAccount> queryAll() throws Exception;
+
+    /**
+     * 根据参数统计记录数
+     *
+     * @param map
+     * @return
+     * @throws Exception
+     */
+    Integer queryCountByParams(Map map) throws Exception;
+
+    /*增加一个用户到家庭组*/
+    Boolean addFamilyMember(Account member, Account executor) throws Exception;
+
+    Boolean deleteFamilyMember(Integer memberId, Account executor) throws Exception;
+
+    List<Map<String, String>> convertFamilyMembers(Account executor) throws Exception;
+
+    List<List<Object>> getFamilyMembers(Account executor) throws Exception;
 }

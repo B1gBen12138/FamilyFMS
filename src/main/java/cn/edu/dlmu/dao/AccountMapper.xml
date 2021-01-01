@@ -77,7 +77,31 @@
         FROM account
         WHERE id = #{id};
     </select>
-    
+
+    <select id="queryByFamilyId" parameterType="Integer" resultType="Account"
+            resultMap="resultAccount">
+        SELECT *
+        FROM account
+        WHERE family_id = #{id};
+    </select>
+
+    <select id="queryByFamilyIdList" parameterType="java.util.List" resultType="Account"
+            resultMap="resultAccount">
+        SELECT *
+        FROM account
+        WHERE family_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="querySpecificAndSingle" parameterType="Integer" resultType="Account"
+            resultMap="resultAccount">
+        SELECT *
+        FROM account
+        WHERE family_id = #{id} or family_id is null;
+    </select>
+
     <!--根据-->
     <select id="queryAll" resultType="account" resultMap="resultAccount">
         SELECT *

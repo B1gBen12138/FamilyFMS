@@ -66,3 +66,14 @@ CREATE TABLE IF NOT EXISTS `io_list` (
   CONSTRAINT `io_list_account_id_fk` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
   CONSTRAINT `io_list_family_account_id_fk` FOREIGN KEY (`family_id`) REFERENCES `family_account` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='收入支出表';
+
+DROP PROCEDURE IF EXISTS `insert_family`;
+DELIMITER $$
+USE `Finance`$$
+CREATE PROCEDURE `insert_family` (OUT `f_id` INTEGER,IN `f_name` VARCHAR(10))
+BEGIN
+INSERT INTO `family_account` (`name`) VALUES (`f_name`);
+SET f_id=LAST_INSERT_ID();
+END$$
+
+DELIMITER ;

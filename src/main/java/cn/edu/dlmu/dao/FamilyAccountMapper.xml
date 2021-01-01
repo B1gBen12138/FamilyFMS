@@ -5,11 +5,26 @@
         <result column="id" property="id"/>
         <result column="name" property="name"/>
     </resultMap>
+
+    <parameterMap id="accountParamMap" type="cn.edu.dlmu.pojo.Account">
+        <parameter property="id" resultMap="id"/>
+        <parameter property="familyId" resultMap="family_id"/>
+        <parameter property="loginName" resultMap="login_name"/>
+        <parameter property="name" resultMap="name"/>
+        <parameter property="password" resultMap="pass_word"/>
+        <parameter property="isAdmin" resultMap="is_admin"/>
+        <parameter property="isSuperAccount" resultMap="is_super_account"/>
+    </parameterMap>
+
 <!---->
     <!--增加一个家庭*/-->
     <insert id="add" parameterType="FamilyAccount">
         insert into family_account
         values(null, #{name});
+    </insert>
+
+    <insert id="addAndReturnId" parameterType="FamilyAccount" statementType="CALLABLE">
+        {call insert_family(#{id,mode=OUT,jdbcType=INTEGER},#{name,mode=IN})}
     </insert>
 
 <!--    根据家庭id删除一个用户-->
@@ -46,4 +61,38 @@
         FROM family_account;
     </select>
 <!---->
+
+    <update id="deleteFamilyMember" parameterType="Integer">
+        <if test="memberId != null">
+        update account
+        <set>
+            family_id=null,
+            is_super_account=0
+        </set>
+        where id=#{memberId}
+        </if>
+    </update>
+
+    <update id="deleteFamilyMemberAll" parameterType="Integer">
+        <if test="familyId != null">
+            update account
+            <set>
+                family_id=null,
+                is_super_account=0
+            </set>
+            where family_id=#{familyId}
+        </if>
+    </update>
+
+    <update id="addFamilyMember" parameterType="Account" parameterMap="accountParamMap">
+        <if test="id != null">
+            update account
+            <set>
+                family_id=#{familyId}
+                <if test="isSuperAccount != null"> ,is_super_account=#{isSuperAccount}</if>
+            </set>
+            where id=#{id}
+        </if>
+    </update>
+
 </mapper>
