@@ -53,7 +53,7 @@
                         <td width="12%" height="35" align="right">用户名</td>
                         <td width="88%" align="left">
                             <label for="name">
-                                <input id="name" name="name" type="text" class="inp001" value="${account.name}"
+                                <input id="name" name="loginName" type="text" class="inp001" value="${account.name}"
                                        onblur="check(name)">
                             </label>
                         </td>

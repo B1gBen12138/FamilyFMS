@@ -41,6 +41,7 @@
                     <tr align="center">
                         <td width="12%" height="35px" align="right">证券账户</td>
                         <td width="12%" align="left" style="width: 20%">
+
                             <label for="bondAccontname">
                                 <input id="bondAccontname" name="bondAccontname" type="text" class="inp001" value=""
                                        onblur="check(name)" >
@@ -142,8 +143,6 @@
                         alert("账户名不存在，请重新输入");
                         // document.getElementById("loginInfo").style.display("block");
                         document.getElementById("bondAccontname").value = "";
-                        document.getElementById("bondAccontname").focus();
-
                     }
                 },
                 dataType: "json"

@@ -86,6 +86,8 @@ public class AccountController {
 	@RequestMapping("/update")
 	public ModelAndView update(Account account) {
 		try {
+			Account a = accountService.queryByLoginName(account.getLoginName());
+			account.setId(a.getId());
 			logger.debug("UserController.update " + account);
 			accountService.update(account);
 			return new ModelAndView("redirect:/account/list");
