@@ -98,10 +98,14 @@ public class AccountController {
 
 	/*页面删除用户，删除后跳转回list，刷新页面*/
 	@RequestMapping("/delete")
-	public ModelAndView del(int id) {
+	public ModelAndView del(int id, HttpSession session) {
 		try {
 			logger.debug("UserController.del " + id);
+			Account account = (Account) session.getAttribute(LOGIN_ACCOUNT);
+
 			accountService.delete(id);
+			if(account.getId() == id)
+				session.invalidate();
 			return new ModelAndView("redirect:/account/list");
 		} catch (Exception e) {
 			e.printStackTrace();

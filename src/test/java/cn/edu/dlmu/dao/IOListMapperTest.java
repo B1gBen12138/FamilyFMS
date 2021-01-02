@@ -20,7 +20,7 @@ public class IOListMapperTest extends BaseTest {
 
 	@Test
 	public void insert() throws Exception {
-		IOList il = new IOList(null, 1, 1, true, 1.1f, 1, new Date(), "", "");
+		IOList il = new IOList(null, 1, 1, true, 1.1f, 1, "", "", "");
 //        System.out.println(il);
 		assertEquals(ioListMapper.add(il), new Integer(1));
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -36,9 +36,9 @@ public class IOListMapperTest extends BaseTest {
 		IOList il = null;
 
 		List<IOList> ill = new LinkedList<IOList>();
-		ill.add(new IOList(null, 1, 1, true, 2.1f, 1, new Date(), "", ""));
-		ill.add(new IOList(null, 1, 1, true, 3.1f, 0, new Date(), "", ""));
-		ill.add(new IOList(null, 1, 1, true, 4.1f, 1, new Date(), "", ""));
+		ill.add(new IOList(null, 1, 1, true, 2.1f, 1, "", "", ""));
+		ill.add(new IOList(null, 1, 1, true, 3.1f, 0, "", "", ""));
+		ill.add(new IOList(null, 1, 1, true, 4.1f, 1, "", "", ""));
 		assertEquals(ioListMapper.insertBatch(ill), new Integer(3));
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("accountId", 1);

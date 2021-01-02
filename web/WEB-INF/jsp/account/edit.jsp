@@ -78,14 +78,16 @@
                         </td>
 
                     </tr>
-                    <tr align="center">
-                        <td width="12%" height="35" align="right">管理员权限</td>
-                        <td width="88%" align="left">
-                            <label for="yes"><input id="yes" type="radio" name="isAdmin" value="1" align="left" style="margin-left: 20px">是</label>
+                    <c:if test="${account.isAdmin==true}">
+                        <tr align="center">
+                            <td width="12%" height="35" align="right">管理员权限</td>
+                            <td width="88%" align="left">
+                                <label for="yes"><input id="yes" type="radio" name="isAdmin" value="1" align="left" style="margin-left: 20px">是</label>
 
-                            <label for="no"><input id="no" type="radio" name="isAdmin" value="0" checked="checked" align="left" style="margin-left: 50px">否</label>
-                        </td>
-                    </tr>
+                                <label for="no"><input id="no" type="radio" name="isAdmin" value="0" checked="checked" align="left" style="margin-left: 50px">否</label>
+                            </td>
+                        </tr>
+                    </c:if>
                 </table>
             </form>
             <table width="98%" border="0" cellpadding="0" cellspacing="0" class="bor001">
@@ -100,6 +102,7 @@
                                  id="Image1" onclick="doSub()">
                         </a>
                     </td>
+
                     <td width="12%" height="40" align="center">
                         <a href="list" target="mainframe"
                            onMouseOver="MM_swapImage('Image2','','../images/login_09.gif',1)"

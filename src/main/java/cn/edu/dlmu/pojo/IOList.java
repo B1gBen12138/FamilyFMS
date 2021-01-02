@@ -33,7 +33,7 @@ public class IOList {
     private Boolean isOutput;
     private Float money;
     private Integer type; // TODO: use enum
-    private Date date;
+    private String date;
     private String source;
     private String comment;
 

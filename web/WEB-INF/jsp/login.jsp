@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: xielian
@@ -9,8 +10,13 @@
 <% String path = request.getContextPath();%>
 <html>
 <head>
-    <title>Title</title>
+    <title>FamilyFMS-Login</title>
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css">
+    <script language="JavaScript" type="text/JavaScript" src="${pageContext.request.contextPath}/js/common.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-3.0.0.min.js"></script>
 </head>
+
+
 <style>
     body {
         background-color: gainsboro;
@@ -106,12 +112,14 @@
         height: 24px;
 
     }
+
     .div_error {
         width: 360px;
         height: 24px;
         text-align: center;
     }
-    .span_error{
+
+    .span_error {
 
         color: #e35b5a;
         font-size: 13px;
@@ -132,31 +140,74 @@
         </div>
 
         <div class="div_empty">
+            <c:if test="${flag==2}">
+                <script>
+                    alert("用户名或密码错误，请重试！");
+                </script>
+            </c:if>
         </div>
-        <form action="${pageContext.request.contextPath}/login" method="post">
+        <form id="subform" action="${pageContext.request.contextPath}/login" method="post">
             <div class="div_input_account">
-                <input class="input_account" type="text" name="name" placeholder="用户名" value="${name}"/>
+                <input id="name" class="input_account" type="text" name="name" placeholder="用户名" value="${name}"/>
             </div>
             <div class="div_empty">
             </div>
 
             <div class="div_input_pwd">
-                <input class="input_pwd" type="password" name="pwd" placeholder="密码" value="${pwd}"/>
+                <input id="password" class="input_pwd" type="password" name="pwd" placeholder="密码" value="${pwd}"/>
             </div>
             <div class="div_empty">
             </div>
-            <div class="div_error">
-                <span class="span_error"> ${errorMsg }</span>
+            <div class="div_button_login">
+                <input id="login" class="button_login" type="submit" value="登录"/>
             </div>
             <div class="div_button_login">
-                <input class="button_login" type="submit" value="登录"/>
+                <input id="register" class="button_login" type="button" value="注册" onclick="ajaxAccount()"/>
             </div>
         </form>
     </div>
-
-
 </div>
 
-</div>
 </body>
+<script>
+    function ajaxAccount() {
+        let name = $('#name');
+        let password = $('#password');
+        if (name !== '' && password !== '') {
+            $.ajax(
+                {
+                    type: "post",
+                    url: "check",
+                    data: "name=" + name.val() + "&password=" + password.val(),
+                    async: false,
+                    success: function (msg) {
+                        if (!msg) {
+                            alert("该用户名已存在！");
+                        }else{
+                            register(name,  password);
+                        }
+                    },
+                    dataType: "json"
+                })
+        }
+    }
+
+    function register(name, password) {
+        $.ajax({
+            type:"post",
+            url:"register",
+            data:"name=" + name.val() + "&password=" + password.val(),
+            async: false,
+            success: function (msg) {
+                if (!msg){
+                    alert("注册失败！请重试");
+                } else{
+                    alert("注册成功！");
+                    sub();
+                }
+            },
+            dataType: "json"
+        })
+    }
+</script>
 </html>
