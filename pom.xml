@@ -5,7 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
     
     <groupId>cn.edu.dlmu</groupId>
-    <artifactId>FinanceSystem</artifactId>
+    <artifactId>FamilyFMS</artifactId>
+    <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     
     <dependencies>
@@ -146,5 +147,6 @@
                 <filtering>false</filtering>
             </resource>
         </resources>
+        <finalName>FamilyFMS</finalName>
     </build>
 </project>

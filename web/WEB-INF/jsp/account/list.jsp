@@ -62,7 +62,7 @@
                                 </td>
                                     <%--                            <td><a href="edit.html"> ${user.name} </a></td>--%>
                                 <td>${account.name} </td>
-                                <td>${account.isAdmin}</td>
+                                <td>${account.isAdmin==true?'是':'否'}</td>
                                 <td>
                                     <a href="#"><img src="${pageContext.request.contextPath}/images/icon_set.gif" alt="编 辑"
                                                      width="14" height="15" border="0" onclick="edit(${account.id})"></a>
@@ -73,7 +73,28 @@
                         </c:forEach>
                     </c:if>
                     <c:if test="${loginAccount.isAdmin == false}">
-                        您没有查看权限！
+                        <tr align="center"  <c:if test="${vs.index%2==1}"> class="bg04"</c:if> >
+                            <td height="35">
+                                    <%--<input type="checkbox" name="id" value="${user.id}">--%>
+                                    ${vs.index+1}
+                            </td>
+                            <td>
+                                    ${loginAccount.loginName}
+                            </td>
+                            <%--                            <td><a href="edit.html"> ${user.name} </a></td>--%>
+                            <td>${loginAccount.name} </td>
+                            <td>${loginAccount.isAdmin==true?'是':'否'}</td>
+                            <td>
+                                <a href="#"><img src="${pageContext.request.contextPath}/images/icon_set.gif" alt="编 辑"
+                                                 width="14" height="15" border="0" onclick="edit(${loginAccount.id})">
+                                </a>
+<%--                                <c:if test="${loginAccount.isAdmin==false}">--%>
+                                    <img src="${pageContext.request.contextPath}/images/delete.gif" alt="删 除" width="13"
+                                         height="16" hspace="10" onclick="del(${loginAccount.id})">
+<%--                                </c:if>--%>
+
+                            </td>
+                        </tr>
                     </c:if>
                 </tr>
             </table>

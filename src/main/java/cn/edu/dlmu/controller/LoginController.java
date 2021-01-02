@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -55,4 +57,39 @@ public class LoginController {
 					.addObject("ex", e);
 		}
 	}
+
+	@RequestMapping("/check")
+	@ResponseBody
+	public boolean check(String name,String password) {
+		try {
+			Account account = accountService.queryByLoginName(name);
+			if(account != null){
+				return false;
+			}
+			return true;
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			System.out.println();
+			return false;
+		}
+	}
+
+	@RequestMapping("/register")
+	@ResponseBody
+	public boolean register(String name,String password) {
+		try {
+			int ret = accountService.add(new Account(null, null, name, name, password, Boolean.FALSE, Boolean.FALSE));
+			if(ret == 0){
+				return false;
+			}
+			return true;
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			System.out.println();
+			return false;
+		}
+	}
+
 }

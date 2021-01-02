@@ -10,10 +10,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service("iOListServiceImpl")
 public class IOListServiceImpl implements IOListService {
@@ -29,6 +27,12 @@ public class IOListServiceImpl implements IOListService {
 
     public Boolean add(IOList t) throws Exception {
         AssertUtil.isNull(t, "实体为空");
+        if(t.getDate().equals("")){
+        	Calendar calendar = Calendar.getInstance();
+        	calendar.add(Calendar.DATE,1);
+        	t.setDate(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+        }
+        logger.debug("ioList add" + t);
         return ioListMapper.add(t) == 1;
     }
 
@@ -46,6 +50,12 @@ public class IOListServiceImpl implements IOListService {
     public Boolean add(IOList ioList, Account executor) throws Exception {
         if (ioList == null || executor == null || executor.getId() == null)
             return Boolean.FALSE;
+	    if(ioList.getDate().equals("")){
+		    Calendar calendar = Calendar.getInstance();
+		    calendar.add(Calendar.DATE,1);
+		    ioList.setDate(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+	    }
+	    logger.debug("ioList add" + ioList);
 
         if (executor.getIsAdmin())
             return ioListMapper.add(ioList) == 1;
