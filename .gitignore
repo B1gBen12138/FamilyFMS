@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 
 **/Thumb.db
+**/.DS_Store
 
 ### STS ###
 .apt_generated
