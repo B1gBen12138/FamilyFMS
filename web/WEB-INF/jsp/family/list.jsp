@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -20,7 +19,7 @@
             <table width="98%" border="0" cellspacing="0" cellpadding="0">
                 <tr valign="top">
                     <td>【 家庭成员管理 】</td>
-                    <c:if test="${isAdmin || !isSuperAccount}">
+                    <c:if test="${user.getIsAdmin()||user.getFamilyId()==null}">
                     <td align="right">
                         <a href="edit" target="mainframe"
                            onMouseOver="MM_swapImage('Image1','','<c:url value="/images/index_10_1.gif" />',1)"
@@ -42,7 +41,7 @@
                 <tr align="center" class="bg03">
                     <td width="5%" height="40"> 序号</td>
                 <c:choose>
-                    <c:when test="${isAdmin || isSuperAccount}">
+                    <c:when test="${user.getIsAdmin() || user.getIsSuperAccount()}">
                     <td width="10%" class="text007"> 家庭Id</td>
                     <td width="25%" class="text007"> 家庭名称</td>
                     <td width="10%" class="text007"> 账户Id</td>
@@ -66,7 +65,7 @@
                         <td height="35">${familyMember.get("familyName")}</td>
                         <td height="35">${familyMember.get("accountId")}</td>
                         <td height="35">${familyMember.get("accountName")}</td>
-                        <c:if test="${isAdmin || isSuperAccount}">
+                        <c:if test="${user.getIsAdmin() || user.getIsSuperAccount()}">
                         <td height="35">${familyMember.get("isAdmin")==true?'是':'否'}</td>
                         <c:set var='arg_familyId' value='familyId=${familyMember.get("familyId")}'/>
                         <c:set var='arg_accountId' value='accountId=${familyMember.get("accountId")}'/>

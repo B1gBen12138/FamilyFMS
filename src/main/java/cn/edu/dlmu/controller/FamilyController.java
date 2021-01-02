@@ -49,8 +49,7 @@ public class FamilyController {
                 familyMemberList = null;
 
             return new ModelAndView("/family/list")
-                    .addObject("isAdmin", user.getIsAdmin())
-                    .addObject("isSuperAccount", user.getIsSuperAccount())
+                    .addObject("user", user)
                     .addObject("familyMemberList", familyMemberList);
         } catch (Exception e) {
             e.printStackTrace();
