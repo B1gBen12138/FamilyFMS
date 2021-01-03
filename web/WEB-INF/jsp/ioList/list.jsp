@@ -7,9 +7,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
     <title>收支项目管理</title>
-    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css">
-    <script language="JavaScript" type="text/JavaScript" src="${pageContext.request.contextPath}/js/common.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jquery-3.0.0.min.js"></script>
+    <link href="<c:url value='/css/style.css' />" rel="stylesheet" type="text/css">
+    <script language="JavaScript" type="text/JavaScript" src="<c:url value='/js/common.js' />"></script>
+    <script src="<c:url value='/js/jquery-3.0.0.min.js' />"></script>
 </head>
 
 <body topmargin="0" leftmargin="0">
@@ -21,13 +21,12 @@
                     <td>【 收支项目管理 】</td>
                     <td align="right">
                         <a href="edit" target="mainframe"
-                           onMouseOver="MM_swapImage('Image1','','${pageContext.request.contextPath}/images/index_10_1.gif',1)"
+                           onMouseOver="MM_swapImage('Image1','','<c:url value="/images/index_10_1.gif" />',1)"
                            onMouseOut="MM_swapImgRestore()"
-                           onMouseDown="MM_swapImage('Image1','','${pageContext.request.contextPath}/images/index_10_2.gif',1)"
-                           onMouseUp="MM_swapImage('Image1','','${pageContext.request.contextPath}/images/index_10_1.gif',1)">
-                            <img src="${pageContext.request.contextPath}/images/index_10_0.gif" width="75"
-                                 height="24"
-                                 border="0" align="top" id="Image1">
+                           onMouseDown="MM_swapImage('Image1','','<c:url value="/images/index_10_2.gif" />',1)"
+                           onMouseUp="MM_swapImage('Image1','','<c:url value="/images/index_10_1.gif" />',1)">
+                            <img src="<c:url value='/images/index_10_0.gif' />" width="75"
+                                 height="24" border="0" align="top" id="Image1">
                         </a>
                     </td>
                 </tr>
@@ -66,10 +65,10 @@
                         <td height="35">${ioList.comment}</td>
                         <td>
                             <a href="edit?id=${ioList.id}">
-                                <img src="${pageContext.request.contextPath}/images/icon_set.gif" alt="编 辑" width="14" height="15" border="0" />
+                                <img src="<c:url value="/images/icon_set.gif" />" alt="编 辑" width="14" height="15" border="0" />
                             </a>
                             <a href="delete?id=${ioList.id}">
-                                <img src="${pageContext.request.contextPath}/images/delete.gif" alt="删 除" width="13" height="15" hspace="10" />
+                                <img src="<c:url value="/images/delete.gif" />" alt="删 除" width="13" height="15" hspace="10" />
                             </a>
                         </td>
                     </tr>
