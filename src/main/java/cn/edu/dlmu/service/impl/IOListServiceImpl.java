@@ -27,10 +27,10 @@ public class IOListServiceImpl implements IOListService {
 
     public Boolean add(IOList t) throws Exception {
         AssertUtil.isNull(t, "实体为空");
-        if(t.getDate().equals("")){
-        	Calendar calendar = Calendar.getInstance();
-        	calendar.add(Calendar.DATE,1);
-        	t.setDate(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+        if (t.getDate().equals("")) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, 1);
+            t.setDate(new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
         }
         logger.debug("ioList add" + t);
         return ioListMapper.add(t) == 1;
@@ -63,8 +63,13 @@ public class IOListServiceImpl implements IOListService {
         ioList.setAccountId(executor.getId());
 
         if (ioList.getFamilyId() != null)
+        {
             if (!ioList.getFamilyId().equals(executor.getFamilyId()))
                 return Boolean.FALSE;
+        }
+        else
+            ioList.setFamilyId(executor.getFamilyId());
+
         return ioListMapper.add(ioList) == 1;
 
     }
